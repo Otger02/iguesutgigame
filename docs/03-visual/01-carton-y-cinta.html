@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cartón y cinta</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:wght@400;700;900&display=swap">
+<style>
+/* Layout: una columna de lectura de 72ch con muestras a ancho completo; el móvil de muestra va centrado y a escala. */
+:root {
+  --bg: #F3EBDC;          /* papel de estraza claro */
+  --fg: #2B2118;          /* rotulador negro-marrón */
+  --muted: #7A6A58;
+  --panel: #FBF6EC;
+  --kraft: #C9A46A;       /* cartón */
+  --kraft-dark: #8A5A2B;  /* cartón en sombra */
+  --tape: #F2D16B;        /* cinta de embalar */
+  --tape-ink: #5A4A12;
+  --poster: #E4572E;      /* rojo de cartel: culpable, peligro */
+  --sky: #4FA3D1;         /* azul de recorte: compañero, acierto */
+  --line: #D8C9AE;
+  --shadow: rgba(43,33,24,.18);
+  --display: "Bungee", "Impact", "Arial Black", sans-serif;
+  --body: "Nunito", "Segoe UI", system-ui, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1F1915; --fg: #F3EBDC; --muted: #BFAE95; --panel: #2A221C;
+    --kraft: #B8945C; --kraft-dark: #6E4722; --tape: #E6C45A; --tape-ink: #3A2E08;
+    --poster: #F26A45; --sky: #6DB6DF; --line: #4A3C30; --shadow: rgba(0,0,0,.45);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1F1915; --fg: #F3EBDC; --muted: #BFAE95; --panel: #2A221C;
+  --kraft: #B8945C; --kraft-dark: #6E4722; --tape: #E6C45A; --tape-ink: #3A2E08;
+  --poster: #F26A45; --sky: #6DB6DF; --line: #4A3C30; --shadow: rgba(0,0,0,.45);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.55; padding-inline: 16px; padding-block: 24px 64px; }
+.wrap { max-width: 980px; margin: 0 auto; display: grid; gap: 40px; }
+header { display: grid; gap: 10px; }
+.eyebrow { font-family: var(--body); font-weight: 900; text-transform: uppercase; letter-spacing: .12em; font-size: .78rem; color: var(--muted); }
+h1 { font-family: var(--display); font-weight: 400; font-size: clamp(2.2rem, 7vw, 4.2rem); line-height: 1; margin: 0; text-wrap: balance; color: var(--kraft-dark); text-shadow: 3px 3px 0 var(--tape); }
+h2 { font-family: var(--display); font-weight: 400; font-size: 1.35rem; margin: 0 0 12px; letter-spacing: .02em; }
+p { max-width: 72ch; margin: 0; }
+.lead { font-size: 1.1rem; font-weight: 700; }
+.fit { display: inline-flex; gap: 8px; align-items: center; background: var(--tape); color: var(--tape-ink); padding: 6px 12px; border-radius: 2px; font-weight: 900; transform: rotate(-1.5deg); width: max-content; max-width: 100%; }
+section { display: grid; gap: 14px; }
+.grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+.swatch { background: var(--panel); border: 2px solid var(--line); padding: 10px; display: grid; gap: 8px; box-shadow: 4px 4px 0 var(--shadow); }
+.swatch .chip { height: 64px; border: 2px solid var(--fg); }
+.swatch b { font-size: .95rem; }
+.swatch small { color: var(--muted); font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: .8rem; }
+.type { display: grid; gap: 16px; background: var(--panel); border: 2px solid var(--line); padding: 18px; box-shadow: 4px 4px 0 var(--shadow); }
+.type .d1 { font-family: var(--display); font-size: clamp(1.8rem, 6vw, 3rem); line-height: 1; }
+.type .d2 { font-family: var(--display); font-size: 1.25rem; }
+.type .b1 { font-size: 1.05rem; }
+.type .cap { font-size: .8rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); font-weight: 900; }
+.type .num { font-variant-numeric: tabular-nums; font-weight: 900; font-size: 2rem; }
+.chars { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+.char { background: var(--panel); border: 2px solid var(--line); padding: 10px; display: grid; gap: 6px; justify-items: center; box-shadow: 4px 4px 0 var(--shadow); }
+.char svg { width: 100%; max-width: 160px; height: auto; }
+.char b { font-size: .9rem; text-align: center; }
+.char small { color: var(--muted); text-align: center; font-size: .8rem; }
+.screens { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); justify-items: center; }
+.phone { width: 100%; max-width: 300px; aspect-ratio: 9 / 19.5; max-width: 300px; background: var(--fg); border-radius: 34px; padding: 10px; box-shadow: 0 18px 40px var(--shadow); }
+.phone svg { width: 100%; height: 100%; display: block; border-radius: 26px; }
+.caption { font-size: .85rem; color: var(--muted); max-width: 300px; text-align: center; }
+.notes { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.note { background: var(--panel); border-left: 6px solid var(--tape); padding: 10px 12px; min-width: 0; }
+.note b { display: block; margin-bottom: 4px; }
+ul { margin: 0; padding-left: 18px; }
+footer { color: var(--muted); font-size: .85rem; border-top: 2px dashed var(--line); padding-top: 16px; }
+@media (prefers-reduced-motion: no-preference) {
+  .wobble { animation: wobble 1.2s steps(2) infinite; transform-origin: 50% 90%; }
+  @keyframes wobble { 0% { transform: rotate(-1.5deg); } 100% { transform: rotate(1.5deg); } }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Dirección visual 1 de 4 · Fase C</div>
+    <h1>Cartón y cinta</h1>
+    <p class="lead">Todo parece recortado de una caja de mudanza y pegado con cinta de embalar. Figuras planas con sombra de papel, texturas de cartón, rotulador grueso y pequeñas imperfecciones de corte. Se mueve como stop-motion a doce imágenes por segundo.</p>
+    <div class="fit">Encaja mejor con: A · La mudanza (también B)</div>
+  </header>
+
+  <section>
+    <h2>Paleta</h2>
+    <p>Seis colores, nunca más de tres por pantalla. El cartón es el fondo del mundo; la cinta amarilla marca lo que es tuyo; el rojo de cartel es solo para el culpable y el peligro; el azul recortado es el compañero y el acierto. Ninguna información va solo en color: lo tuyo lleva cinta, lo del otro lleva una pinza, el peligro lleva rayas.</p>
+    <div class="grid">
+      <div class="swatch"><div class="chip" style="background:#C9A46A"></div><b>Cartón</b><small>#C9A46A · fondo del mundo</small></div>
+      <div class="swatch"><div class="chip" style="background:#8A5A2B"></div><b>Cartón en sombra</b><small>#8A5A2B · bordes y titulares</small></div>
+      <div class="swatch"><div class="chip" style="background:#F2D16B"></div><b>Cinta de embalar</b><small>#F2D16B · lo tuyo, botones</small></div>
+      <div class="swatch"><div class="chip" style="background:#E4572E"></div><b>Rojo de cartel</b><small>#E4572E · culpable, peligro</small></div>
+      <div class="swatch"><div class="chip" style="background:#4FA3D1"></div><b>Azul recortado</b><small>#4FA3D1 · compañero, acierto</small></div>
+      <div class="swatch"><div class="chip" style="background:#2B2118"></div><b>Rotulador</b><small>#2B2118 · trazos, texto</small></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Tipografía</h2>
+    <div class="type">
+      <div class="cap">Titulares · Bungee (respaldo: Impact, Arial Black)</div>
+      <div class="d1">¡SE HA CAÍDO EL PIANO!</div>
+      <div class="d2">Culpable: Ana (bajó su lado 40°)</div>
+      <div class="cap">Texto · Nunito 700/900 (respaldo: Segoe UI, system-ui)</div>
+      <div class="b1">Inclina el móvil para levantar tu asa. El de delante ve el camino; el de atrás ve el nivel. Nadie lee esto en el bar: cabe en un icono.</div>
+      <div class="cap">Números · tabulares, siempre grandes</div>
+      <div class="num">0:47 · 3/5 muebles</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Siluetas de personajes</h2>
+    <p>Los jugadores son figuras de cartón recortadas, sin cara detallada: dos ojos y una boca de rotulador. Lo que las distingue es la silueta y el gesto, no el color. La mascota es una caja con patas y una tira de cinta por boca.</p>
+    <div class="chars">
+      <div class="char">
+        <svg viewBox="0 0 120 150" role="img" aria-label="Mascota: caja de mudanza con patas">
+          <rect x="22" y="38" width="76" height="70" fill="#C9A46A" stroke="#2B2118" stroke-width="4"/>
+          <rect x="22" y="38" width="76" height="12" fill="#8A5A2B" stroke="#2B2118" stroke-width="4"/>
+          <rect x="54" y="38" width="12" height="70" fill="#F2D16B" stroke="#2B2118" stroke-width="3"/>
+          <circle cx="42" cy="74" r="6" fill="#2B2118"/><circle cx="78" cy="74" r="6" fill="#2B2118"/>
+          <rect x="44" y="90" width="32" height="7" fill="#F2D16B" stroke="#2B2118" stroke-width="2" transform="rotate(-4 60 93)"/>
+          <rect x="34" y="108" width="12" height="26" fill="#2B2118"/><rect x="74" y="108" width="12" height="26" fill="#2B2118"/>
+          <rect x="26" y="130" width="24" height="8" fill="#2B2118"/><rect x="70" y="130" width="24" height="8" fill="#2B2118"/>
+        </svg>
+        <b>La Caja</b><small>mascota: cara de marca, aparece en el culpable y en el icono</small>
+      </div>
+      <div class="char">
+        <svg viewBox="0 0 120 150" role="img" aria-label="Jugador alto cargando">
+          <ellipse cx="60" cy="142" rx="34" ry="5" fill="#2B2118" opacity=".25"/>
+          <circle cx="60" cy="30" r="18" fill="#C9A46A" stroke="#2B2118" stroke-width="4"/>
+          <path d="M40 50 h40 l6 60 h-52 z" fill="#4FA3D1" stroke="#2B2118" stroke-width="4"/>
+          <rect x="14" y="54" width="22" height="10" fill="#C9A46A" stroke="#2B2118" stroke-width="3" transform="rotate(-30 25 59)"/>
+          <rect x="84" y="54" width="22" height="10" fill="#C9A46A" stroke="#2B2118" stroke-width="3" transform="rotate(30 95 59)"/>
+          <rect x="44" y="110" width="12" height="30" fill="#2B2118"/><rect x="64" y="110" width="12" height="30" fill="#2B2118"/>
+          <circle cx="54" cy="28" r="2.5" fill="#2B2118"/><circle cx="66" cy="28" r="2.5" fill="#2B2118"/>
+        </svg>
+        <b>Asa de delante</b><small>brazos arriba, ve el camino</small>
+      </div>
+      <div class="char">
+        <svg viewBox="0 0 120 150" role="img" aria-label="Jugador bajo y ancho sujetando">
+          <ellipse cx="60" cy="142" rx="38" ry="5" fill="#2B2118" opacity=".25"/>
+          <circle cx="60" cy="40" r="20" fill="#C9A46A" stroke="#2B2118" stroke-width="4"/>
+          <rect x="30" y="60" width="60" height="50" rx="6" fill="#E4572E" stroke="#2B2118" stroke-width="4"/>
+          <rect x="8" y="80" width="26" height="10" fill="#C9A46A" stroke="#2B2118" stroke-width="3"/>
+          <rect x="86" y="80" width="26" height="10" fill="#C9A46A" stroke="#2B2118" stroke-width="3"/>
+          <rect x="38" y="110" width="14" height="28" fill="#2B2118"/><rect x="68" y="110" width="14" height="28" fill="#2B2118"/>
+          <circle cx="53" cy="38" r="2.5" fill="#2B2118"/><circle cx="67" cy="38" r="2.5" fill="#2B2118"/>
+          <path d="M52 48 q8 6 16 0" stroke="#2B2118" stroke-width="3" fill="none"/>
+        </svg>
+        <b>Asa de atrás</b><small>brazos rectos, ve el nivel</small>
+      </div>
+      <div class="char">
+        <svg viewBox="0 0 120 150" role="img" aria-label="Gato de cartón">
+          <ellipse cx="60" cy="142" rx="40" ry="5" fill="#2B2118" opacity=".25"/>
+          <ellipse cx="62" cy="108" rx="40" ry="24" fill="#8A5A2B" stroke="#2B2118" stroke-width="4"/>
+          <circle cx="32" cy="88" r="18" fill="#8A5A2B" stroke="#2B2118" stroke-width="4"/>
+          <polygon points="18,76 24,58 34,74" fill="#8A5A2B" stroke="#2B2118" stroke-width="3"/>
+          <polygon points="46,76 40,58 30,74" fill="#8A5A2B" stroke="#2B2118" stroke-width="3"/>
+          <path d="M100 100 q22 -30 6 -46" stroke="#2B2118" stroke-width="8" fill="none" stroke-linecap="round"/>
+          <circle cx="27" cy="88" r="2.5" fill="#F2D16B" stroke="#2B2118" stroke-width="1"/><circle cx="38" cy="88" r="2.5" fill="#F2D16B" stroke="#2B2118" stroke-width="1"/>
+        </svg>
+        <b>El gato</b><small>interferencia: se cruza y hay que agitar</small>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Pantalla de muestra (La mudanza)</h2>
+    <div class="screens">
+      <div>
+        <div class="phone">
+          <svg viewBox="0 0 360 780" role="img" aria-label="Pantalla de juego: pasillo con un sofá cargado entre dos asas">
+            <rect width="360" height="780" fill="#C9A46A"/>
+            <!-- pasillo -->
+            <polygon points="0,560 360,560 300,300 60,300" fill="#8A5A2B"/>
+            <rect x="60" y="120" width="240" height="180" fill="#F3EBDC" stroke="#2B2118" stroke-width="4"/>
+            <rect x="130" y="150" width="100" height="150" fill="#2B2118"/>
+            <!-- escalón que viene -->
+            <rect x="60" y="300" width="240" height="22" fill="#2B2118"/>
+            <rect x="60" y="300" width="240" height="22" fill="url(#rayas)"/>
+            <defs><pattern id="rayas" width="16" height="22" patternUnits="userSpaceOnUse"><rect width="8" height="22" fill="#F2D16B"/></pattern></defs>
+            <!-- cabecera -->
+            <rect x="0" y="0" width="360" height="72" fill="#2B2118"/>
+            <text x="20" y="48" font-family="Bungee, Impact, sans-serif" font-size="30" fill="#F2D16B">0:47</text>
+            <text x="200" y="48" font-family="Bungee, Impact, sans-serif" font-size="22" fill="#F3EBDC">3/5</text>
+            <rect x="250" y="28" width="90" height="26" fill="#F2D16B" transform="rotate(-3 295 41)"/>
+            <text x="262" y="47" font-family="Nunito, sans-serif" font-weight="900" font-size="15" fill="#5A4A12" transform="rotate(-3 295 41)">TU ASA</text>
+            <!-- sofá inclinado -->
+            <g class="wobble" transform="rotate(8 180 440)">
+              <rect x="70" y="400" width="220" height="70" rx="10" fill="#E4572E" stroke="#2B2118" stroke-width="5"/>
+              <rect x="70" y="380" width="60" height="40" rx="8" fill="#E4572E" stroke="#2B2118" stroke-width="5"/>
+              <rect x="230" y="380" width="60" height="40" rx="8" fill="#E4572E" stroke="#2B2118" stroke-width="5"/>
+              <rect x="84" y="474" width="14" height="18" fill="#2B2118"/><rect x="262" y="474" width="14" height="18" fill="#2B2118"/>
+            </g>
+            <!-- asas -->
+            <g>
+              <rect x="30" y="440" width="54" height="22" fill="#F2D16B" stroke="#2B2118" stroke-width="3"/>
+              <text x="36" y="456" font-family="Nunito, sans-serif" font-weight="900" font-size="12" fill="#5A4A12">TÚ</text>
+              <circle cx="300" cy="400" r="18" fill="#4FA3D1" stroke="#2B2118" stroke-width="3"/>
+              <text x="292" y="405" font-family="Nunito, sans-serif" font-weight="900" font-size="12" fill="#2B2118">P</text>
+            </g>
+            <!-- aviso -->
+            <rect x="40" y="520" width="280" height="56" fill="#F3EBDC" stroke="#2B2118" stroke-width="4"/>
+            <polygon points="60,564 80,530 100,564" fill="#E4572E" stroke="#2B2118" stroke-width="3"/>
+            <text x="112" y="556" font-family="Bungee, Impact, sans-serif" font-size="18" fill="#2B2118">¡ESCALÓN!</text>
+            <!-- nivel -->
+            <rect x="40" y="610" width="280" height="40" fill="#2B2118"/>
+            <rect x="48" y="618" width="264" height="24" fill="#F3EBDC"/>
+            <rect x="60" y="618" width="140" height="24" fill="#E4572E"/>
+            <rect x="178" y="610" width="6" height="40" fill="#F2D16B"/>
+            <text x="40" y="680" font-family="Nunito, sans-serif" font-weight="900" font-size="16" fill="#2B2118">Tu lado está bajo: inclina hacia ti</text>
+            <!-- jugadores -->
+            <g font-family="Nunito, sans-serif" font-weight="900" font-size="13">
+              <rect x="40" y="710" width="60" height="40" fill="#F2D16B" stroke="#2B2118" stroke-width="3"/><text x="52" y="736" fill="#5A4A12">TÚ</text>
+              <rect x="110" y="710" width="60" height="40" fill="#4FA3D1" stroke="#2B2118" stroke-width="3"/><text x="118" y="736" fill="#2B2118">PAU</text>
+              <rect x="180" y="710" width="60" height="40" fill="#F3EBDC" stroke="#2B2118" stroke-width="3"/><text x="188" y="736" fill="#2B2118">ANA</text>
+              <rect x="250" y="710" width="60" height="40" fill="#F3EBDC" stroke="#2B2118" stroke-width="3"/><text x="258" y="736" fill="#2B2118">LEO</text>
+            </g>
+          </svg>
+        </div>
+        <p class="caption">En juego: tu asa lleva cinta amarilla, el compañero lleva pinza azul, el obstáculo viene con rayas (no solo color) y el nivel es una regla de carpintero.</p>
+      </div>
+      <div>
+        <div class="phone">
+          <svg viewBox="0 0 360 780" role="img" aria-label="Pantalla de culpable: Ana bajó su lado">
+            <rect width="360" height="780" fill="#E4572E"/>
+            <rect x="24" y="90" width="312" height="300" fill="#F3EBDC" stroke="#2B2118" stroke-width="5" transform="rotate(-2 180 240)"/>
+            <text x="180" y="150" text-anchor="middle" font-family="Bungee, Impact, sans-serif" font-size="30" fill="#2B2118">¡SE CAYÓ!</text>
+            <!-- caja mascota -->
+            <g transform="translate(120 180) scale(1)">
+              <rect x="22" y="38" width="76" height="70" fill="#C9A46A" stroke="#2B2118" stroke-width="4"/>
+              <rect x="54" y="38" width="12" height="70" fill="#F2D16B" stroke="#2B2118" stroke-width="3"/>
+              <path d="M36 70 l12 10 M48 70 l-12 10 M72 70 l12 10 M84 70 l-12 10" stroke="#2B2118" stroke-width="4"/>
+              <path d="M44 96 q16 -12 32 0" stroke="#2B2118" stroke-width="4" fill="none"/>
+              <rect x="34" y="108" width="12" height="20" fill="#2B2118"/><rect x="74" y="108" width="12" height="20" fill="#2B2118"/>
+            </g>
+            <rect x="60" y="430" width="240" height="60" fill="#2B2118"/>
+            <text x="180" y="470" text-anchor="middle" font-family="Bungee, Impact, sans-serif" font-size="26" fill="#F2D16B">CULPABLE: ANA</text>
+            <text x="180" y="520" text-anchor="middle" font-family="Nunito, sans-serif" font-weight="900" font-size="17" fill="#F3EBDC">bajó su lado 40° en el escalón</text>
+            <!-- gráfica de asas -->
+            <rect x="40" y="560" width="280" height="110" fill="#F3EBDC" stroke="#2B2118" stroke-width="4"/>
+            <polyline points="50,620 100,616 150,612 200,620 240,660 310,664" fill="none" stroke="#E4572E" stroke-width="6"/>
+            <polyline points="50,620 100,622 150,618 200,616 240,612 310,610" fill="none" stroke="#4FA3D1" stroke-width="6" stroke-dasharray="10 6"/>
+            <text x="52" y="590" font-family="Nunito, sans-serif" font-weight="900" font-size="12" fill="#2B2118">Ana (línea continua) · Tú (discontinua)</text>
+            <rect x="40" y="700" width="280" height="50" fill="#F2D16B" stroke="#2B2118" stroke-width="4"/>
+            <text x="180" y="732" text-anchor="middle" font-family="Bungee, Impact, sans-serif" font-size="18" fill="#2B2118">SIGUIENTE MUEBLE EN 2</text>
+          </svg>
+        </div>
+        <p class="caption">Culpable: dos segundos, fondo rojo de cartel, la mascota mareada, la gráfica de las dos asas (continua frente a discontinua, no solo color) y reinicio automático.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Reglas de uso</h2>
+    <div class="notes">
+      <div class="note"><b>Textura</b>Una sola textura de cartón (tileable, 512 px) multiplicada sobre los planos; el resto son formas planas. Sin degradados.</div>
+      <div class="note"><b>Sombras</b>Sombra dura desplazada 4 px abajo-derecha, nunca difuminada: es papel sobre papel.</div>
+      <div class="note"><b>Movimiento</b>Doce imágenes por segundo para personajes (stop-motion), sesenta para el nivel y la cámara. Sin easing suave: pasos.</div>
+      <div class="note"><b>Accesibilidad</b>Tuyo = cinta; compañero = pinza; peligro = rayas; acierto = tick de rotulador. El color es refuerzo.</div>
+      <div class="note"><b>Miniatura de TikTok</b>Fondo cartón uniforme y una figura roja o amarilla centrada: se lee a 120 px de ancho.</div>
+      <div class="note"><b>Qué no hacer</b>Nada de animales mono, nada de bombas, nada de amarillo plátano como color dominante.</div>
+    </div>
+  </section>
+
+  <footer>Dirección "Cartón y cinta" · Fase C · 2026-10-06 · Las fuentes se cargan de Google Fonts; sin red se usan los respaldos declarados.</footer>
+</div>
+</body>
+</html>
