@@ -16,9 +16,25 @@ Nada está decidido si no está aquí. Cada entrada: fecha, decisión, alternati
 - **Alternativas descartadas:** empezar por un prototipo digital directamente.
 - **Motivo:** el brief prioriza validar la diversión pronto, pero antes hay que elegir concepto; el prototipo digital es la fase siguiente.
 
-## Pendientes de decisión (se rellenan al cerrar la Fase C)
+## 2026-10-06 · Hipótesis del brief evaluadas (propuesta de la sesión de Iñaki, pendiente de confirmar)
 
-- Qué finalistas se prueban en papel primero.
-- Qué concepto se lleva a prototipo digital.
-- Qué dirección visual.
-- Motor y arquitectura (fase siguiente; la investigación técnica solo abre opciones).
+No son decisiones hasta que Iñaki y Otger las confirmen; se anotan aquí para que la otra sesión sepa de dónde vienen los finalistas.
+
+- **Saboteador oculto fijo desde 4 jugadores:** se propone descartarlo como mecánica (suspende originalidad: es "cooperativo + impostor" tal cual) y sustituirlo por **La tentación** (ofertas privadas y breves de traición, sin rol fijo, desde 3 jugadores) como capa opcional. Fuente: `02-concepto/filtro.md`.
+- **Restricciones de comunicación sin atrezo:** se mantienen; el finalista C las convierte en el centro (idioma generado) y A y B las usan como interferencias cortas.
+- **Rol de entrada:** se mantiene en A (asa de atrás) y B (mano); C lo sustituye por "idioma de dos signos" para el recién llegado.
+- **Soluciones generadas por partida:** se mantiene en los tres finalistas.
+- **Asientos izquierda/derecha en presencial:** opcional en A (parejas con vecinos reales); innecesario en B y C.
+- **Pantalla de culpable y clip automático:** se mantiene en los tres; el clip se genera desde el estado del juego, sin grabar pantalla ni cámara (recomendación de `01-investigacion/viabilidad-tecnica.md`).
+- **Paga el anfitrión, sin anuncios en partida:** se mantiene como hipótesis de monetización para después de validar; MVP sin monetización (`01-investigacion/mercado-y-cliente.md`).
+
+## Pendientes de decisión (Iñaki y Otger) · con la recomendación de la sesión de Iñaki
+
+| Decisión | Recomendación | Dónde está el razonamiento |
+|---|---|---|
+| Qué finalistas se prueban en papel y cuándo | Los tres, en una misma sesión de una hora con 4-6 amigos, en el orden A → B → C; repetir con un segundo grupo; grabar 15 s de cada uno | `02-concepto/comparativa.md` §5 y las fichas `finalista-*.md` |
+| Qué concepto va a prototipo digital | **A · La mudanza**; B si A no produce risas en dos grupos; C como plan B barato o como tipo de ronda dentro de A o B | `02-concepto/comparativa.md` |
+| Qué dirección visual | **Cartón y cinta** si el concepto es A; Neón de bar si es B; Risografía si es C. Plastilina solo si se prioriza la mascota y se asume el doble de coste | `03-visual/README.md` |
+| Capa social por defecto | **La tentación** desde 3 jugadores, activable; nunca saboteador fijo | `02-concepto/filtro.md` |
+| Motor y arquitectura | **No decidir todavía**: Godot 4 o web + Capacitor según concepto y estilo; antes, una tarde de medición en un Android de gama media. El prototipo desechable, en PWA con lo que ya sabéis (Next.js) y una sala autoritativa ligera (PartyKit/Durable Objects o Colyseus), no Supabase Realtime para el estado de ronda | `01-investigacion/viabilidad-tecnica.md` §2 y §4 |
+| Cuenta de desarrollador y titular | Cuenta personal de Google Play y cuenta individual de Apple a nombre de uno de los dos, con pacto escrito; sin SL hasta que haya ingresos. Validar con una gestoría | `01-investigacion/requisitos-publicacion.md` |

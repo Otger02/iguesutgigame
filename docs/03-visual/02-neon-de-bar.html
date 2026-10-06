@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Neón de bar</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Righteous&family=Nunito+Sans:wght@400;700;800&display=swap">
+<style>
+/* Layout: dirección de un solo mundo (noche de bar); la página es oscura por diseño y el tema claro solo aclara el papel alrededor de las muestras. */
+:root {
+  --bg: #0E1026;            /* noche */
+  --fg: #F2F2F0;            /* tiza */
+  --muted: #9A9DBF;
+  --panel: #171A3A;
+  --line: #2A2E5C;
+  --neon-pink: #FF4D9D;     /* tú, tu red */
+  --neon-cyan: #2EE6D6;     /* compañero, acierto */
+  --neon-yellow: #FFE34D;   /* bicho, objetivo */
+  --neon-violet: #8C7BFF;   /* interferencias */
+  --chalk: #F2F2F0;
+  --shadow: rgba(0,0,0,.55);
+  --display: "Righteous", "Trebuchet MS", "Arial Rounded MT Bold", sans-serif;
+  --body: "Nunito Sans", "Segoe UI", system-ui, sans-serif;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #ECEBF3; --fg: #15173A; --muted: #5A5D86; --panel: #FFFFFF; --line: #CFD1E6; --shadow: rgba(21,23,58,.18);
+    color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --bg: #ECEBF3; --fg: #15173A; --muted: #5A5D86; --panel: #FFFFFF; --line: #CFD1E6; --shadow: rgba(21,23,58,.18);
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.55; padding-inline: 16px; padding-block: 24px 64px; }
+.wrap { max-width: 980px; margin: 0 auto; display: grid; gap: 40px; }
+header { display: grid; gap: 10px; }
+.eyebrow { font-weight: 800; text-transform: uppercase; letter-spacing: .14em; font-size: .78rem; color: var(--muted); }
+h1 { font-family: var(--display); font-weight: 400; font-size: clamp(2.4rem, 8vw, 4.6rem); line-height: 1; margin: 0; text-wrap: balance; color: var(--neon-pink); text-shadow: 0 0 6px var(--neon-pink), 0 0 22px rgba(255,77,157,.55); }
+h2 { font-family: var(--display); font-weight: 400; font-size: 1.4rem; margin: 0 0 12px; color: var(--neon-cyan); }
+p { max-width: 72ch; margin: 0; }
+.lead { font-size: 1.1rem; font-weight: 700; }
+.fit { display: inline-flex; gap: 8px; align-items: center; border: 2px solid var(--neon-yellow); color: var(--neon-yellow); padding: 6px 12px; border-radius: 999px; font-weight: 800; box-shadow: 0 0 10px rgba(255,227,77,.35), inset 0 0 10px rgba(255,227,77,.15); max-width: 100%; flex-wrap: wrap; }
+section { display: grid; gap: 14px; }
+.grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+.swatch { background: var(--panel); border: 1px solid var(--line); padding: 10px; display: grid; gap: 8px; border-radius: 12px; }
+.swatch .chip { height: 64px; border-radius: 8px; }
+.swatch .chip.glow { box-shadow: 0 0 18px currentColor; }
+.swatch b { font-size: .95rem; }
+.swatch small { color: var(--muted); font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: .8rem; }
+.type { display: grid; gap: 16px; background: var(--panel); border: 1px solid var(--line); padding: 18px; border-radius: 16px; }
+.type .d1 { font-family: var(--display); font-size: clamp(1.8rem, 6vw, 3rem); line-height: 1.05; color: var(--neon-yellow); text-shadow: 0 0 8px rgba(255,227,77,.6); }
+.type .d2 { font-family: var(--display); font-size: 1.25rem; color: var(--neon-cyan); }
+.type .b1 { font-size: 1.05rem; }
+.type .cap { font-size: .8rem; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); font-weight: 800; }
+.type .num { font-variant-numeric: tabular-nums; font-weight: 800; font-size: 2rem; font-family: var(--display); }
+.chars { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+.char { background: #0E1026; border: 1px solid var(--line); padding: 10px; display: grid; gap: 6px; justify-items: center; border-radius: 16px; }
+.char svg { width: 100%; max-width: 160px; height: auto; }
+.char b { font-size: .9rem; text-align: center; color: #F2F2F0; }
+.char small { color: #9A9DBF; text-align: center; font-size: .8rem; }
+.screens { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); justify-items: center; }
+.phone { width: 100%; max-width: 300px; aspect-ratio: 9 / 19.5; background: #05061A; border-radius: 34px; padding: 10px; box-shadow: 0 18px 40px var(--shadow), 0 0 0 1px var(--line); }
+.phone svg { width: 100%; height: 100%; display: block; border-radius: 26px; }
+.caption { font-size: .85rem; color: var(--muted); max-width: 300px; text-align: center; }
+.notes { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.note { background: var(--panel); border: 1px solid var(--line); border-top: 3px solid var(--neon-violet); padding: 10px 12px; min-width: 0; border-radius: 10px; }
+.note b { display: block; margin-bottom: 4px; }
+footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--line); padding-top: 16px; }
+@media (prefers-reduced-motion: no-preference) {
+  .pulse { animation: pulse 1.6s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .55; } }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Dirección visual 2 de 4 · Fase C</div>
+    <h1>Neón de bar</h1>
+    <p class="lead">Noche, un fondo azul muy oscuro y todo lo importante dibujado como tubos de neón: líneas gruesas que brillan, bichos que son solo contorno y texto de pizarra. Lo que no brilla, no importa. Pensado para verse en un bar con poca luz y en un vídeo grabado de noche.</p>
+    <div class="fit">Encaja mejor con: B · Bichos alrededor (también C)</div>
+  </header>
+
+  <section>
+    <h2>Paleta</h2>
+    <p>Un fondo y cuatro neones. Cada neón tiene un papel fijo en todo el juego, y además una forma fija: tu red es rosa y redonda, el compañero es cian y cuadrado, el bicho es amarillo y tiene alas, las interferencias son violetas y parpadean. Nunca dos neones del mismo color juntos sin forma distinta.</p>
+    <div class="grid">
+      <div class="swatch"><div class="chip" style="background:#0E1026"></div><b>Noche</b><small>#0E1026 · fondo único</small></div>
+      <div class="swatch"><div class="chip glow" style="background:#FF4D9D;color:#FF4D9D"></div><b>Rosa neón</b><small>#FF4D9D · tú, tu red</small></div>
+      <div class="swatch"><div class="chip glow" style="background:#2EE6D6;color:#2EE6D6"></div><b>Cian neón</b><small>#2EE6D6 · compañero, acierto</small></div>
+      <div class="swatch"><div class="chip glow" style="background:#FFE34D;color:#FFE34D"></div><b>Amarillo neón</b><small>#FFE34D · bicho, objetivo</small></div>
+      <div class="swatch"><div class="chip glow" style="background:#8C7BFF;color:#8C7BFF"></div><b>Violeta neón</b><small>#8C7BFF · interferencias</small></div>
+      <div class="swatch"><div class="chip" style="background:#F2F2F0"></div><b>Tiza</b><small>#F2F2F0 · texto, pizarra</small></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Tipografía</h2>
+    <div class="type">
+      <div class="cap">Titulares · Righteous (respaldo: Trebuchet MS, Arial Rounded)</div>
+      <div class="d1">¡DETRÁS DE TI!</div>
+      <div class="d2">Se escapó la polilla dorada</div>
+      <div class="cap">Texto · Nunito Sans 700/800 (respaldo: Segoe UI, system-ui)</div>
+      <div class="b1">Mueve el móvil para mirar alrededor. Los ojos ven; las manos cazan. Cada veinte segundos cambiáis.</div>
+      <div class="cap">Números · Righteous, tabulares</div>
+      <div class="num">0:38 · 4 cazados</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Siluetas de personajes</h2>
+    <p>Los bichos son contornos de neón de un solo trazo: se dibujan con una línea y brillan. Los jugadores no tienen cuerpo en pantalla: son su red (rosa) o su mirada (un haz cian). La mascota es una polilla con gafas de sol que siempre va hacia la luz equivocada.</p>
+    <div class="chars">
+      <div class="char">
+        <svg viewBox="0 0 120 150" role="img" aria-label="Mascota: polilla con gafas de sol">
+          <defs><filter id="g1" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+          <g fill="none" stroke="#FFE34D" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" filter="url(#g1)">
+            <path d="M60 50 C 30 20, 8 40, 18 70 C 24 88, 44 90, 60 80"/>
+            <path d="M60 50 C 90 20, 112 40, 102 70 C 96 88, 76 90, 60 80"/>
+            <path d="M60 46 L60 110"/>
+            <path d="M52 36 L44 20 M68 36 L76 20"/>
+            <circle cx="60" cy="100" r="8"/>
+          </g>
+          <g stroke="#F2F2F0" stroke-width="4" fill="none" stroke-linecap="round">
+            <rect x="42" y="38" width="14" height="10" rx="3"/><rect x="64" y="38" width="14" height="10" rx="3"/><path d="M56 43 h8"/>
+          </g>
+        </svg>
+        <b>La Polilla</b><small>mascota: siempre va hacia la luz equivocada</small>
+      </div>
+      <div class="char">
+        <svg viewBox="0 0 120 150" role="img" aria-label="Bicho: mosca con alas redondas">
+          <defs><filter id="g2" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+          <g fill="none" stroke="#FFE34D" stroke-width="4" stroke-linecap="round" filter="url(#g2)">
+            <ellipse cx="60" cy="86" rx="22" ry="30"/>
+            <ellipse cx="34" cy="60" rx="22" ry="14" transform="rotate(-25 34 60)"/>
+            <ellipse cx="86" cy="60" rx="22" ry="14" transform="rotate(25 86 60)"/>
+            <circle cx="52" cy="78" r="4"/><circle cx="68" cy="78" r="4"/>
+            <path d="M40 100 l-14 10 M80 100 l14 10 M44 112 l-10 16 M76 112 l10 16"/>
+          </g>
+        </svg>
+        <b>Bicho normal</b><small>una red basta</small>
+      </div>
+      <div class="char">
+        <svg viewBox="0 0 120 150" role="img" aria-label="Bicho grande de dos redes">
+          <defs><filter id="g3" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+          <g fill="none" stroke="#FFE34D" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" filter="url(#g3)">
+            <path d="M20 90 L60 30 L100 90 Z"/>
+            <path d="M34 90 L60 56 L86 90"/>
+            <circle cx="50" cy="76" r="4"/><circle cx="70" cy="76" r="4"/>
+            <path d="M30 100 l-12 22 M90 100 l12 22 M60 92 v30"/>
+          </g>
+          <g fill="none" stroke="#FF4D9D" stroke-width="3" stroke-dasharray="4 4"><circle cx="38" cy="120" r="12"/><circle cx="82" cy="120" r="12"/></g>
+        </svg>
+        <b>Bicho de dos redes</b><small>hay que cerrar dos a la vez (marcas rosas)</small>
+      </div>
+      <div class="char">
+        <svg viewBox="0 0 120 150" role="img" aria-label="Red del jugador y haz de los ojos">
+          <defs><filter id="g4" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+          <g fill="none" stroke="#FF4D9D" stroke-width="4" stroke-linecap="round" filter="url(#g4)">
+            <circle cx="46" cy="60" r="26"/>
+            <path d="M46 34 v52 M20 60 h52 M28 42 l36 36 M64 42 l-36 36"/>
+            <path d="M64 80 L96 132"/>
+          </g>
+          <g fill="none" stroke="#2EE6D6" stroke-width="3" opacity=".9"><path d="M100 20 L112 60 L92 60 Z"/></g>
+        </svg>
+        <b>Red (mano) y haz (ojo)</b><small>los jugadores son su herramienta</small>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Pantalla de muestra (Bichos alrededor)</h2>
+    <div class="screens">
+      <div>
+        <div class="phone">
+          <svg viewBox="0 0 360 780" role="img" aria-label="Pantalla de una mano: red rosa, brújula de 360 grados y un bicho borroso">
+            <defs>
+              <filter id="gl" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              <radialGradient id="fog"><stop offset="0" stop-color="#FFE34D" stop-opacity=".55"/><stop offset="1" stop-color="#FFE34D" stop-opacity="0"/></radialGradient>
+            </defs>
+            <rect width="360" height="780" fill="#0E1026"/>
+            <!-- cabecera -->
+            <text x="20" y="54" font-family="Righteous, sans-serif" font-size="30" fill="#F2F2F0">0:38</text>
+            <text x="200" y="54" font-family="Righteous, sans-serif" font-size="22" fill="#FFE34D">4 cazados</text>
+            <rect x="20" y="70" width="110" height="28" rx="14" fill="none" stroke="#FF4D9D" stroke-width="2" filter="url(#gl)"/>
+            <text x="34" y="89" font-family="Nunito Sans, sans-serif" font-weight="800" font-size="14" fill="#FF4D9D">ERES MANO</text>
+            <!-- brújula 360 -->
+            <g transform="translate(180 170)">
+              <circle r="60" fill="none" stroke="#2A2E5C" stroke-width="2"/>
+              <path d="M0 -60 L8 -44 L-8 -44 Z" fill="#FF4D9D" filter="url(#gl)"/>
+              <circle cx="44" cy="-30" r="6" fill="#FFE34D" filter="url(#gl)"/>
+              <circle cx="-30" cy="42" r="6" fill="#FFE34D" filter="url(#gl)"/>
+              <text x="0" y="78" text-anchor="middle" font-family="Nunito Sans, sans-serif" font-size="12" fill="#9A9DBF">dónde miras tú</text>
+            </g>
+            <!-- bicho borroso justo delante -->
+            <circle cx="230" cy="420" r="70" fill="url(#fog)"/>
+            <!-- red -->
+            <g fill="none" stroke="#FF4D9D" stroke-width="5" stroke-linecap="round" filter="url(#gl)" class="pulse">
+              <circle cx="180" cy="430" r="80"/>
+              <path d="M180 350 v160 M100 430 h160 M124 374 l112 112 M236 374 l-112 112"/>
+            </g>
+            <!-- grito del ojo -->
+            <rect x="30" y="560" width="300" height="70" rx="14" fill="#171A3A" stroke="#2EE6D6" stroke-width="2"/>
+            <rect x="46" y="576" width="24" height="24" fill="#2EE6D6"/>
+            <text x="84" y="590" font-family="Nunito Sans, sans-serif" font-weight="800" font-size="14" fill="#2EE6D6">PAU (OJO) te ve el bicho</text>
+            <text x="84" y="614" font-family="Nunito Sans, sans-serif" font-size="14" fill="#F2F2F0">está a tu derecha, más arriba</text>
+            <!-- botón -->
+            <rect x="60" y="660" width="240" height="64" rx="32" fill="none" stroke="#FF4D9D" stroke-width="4" filter="url(#gl)"/>
+            <text x="180" y="702" text-anchor="middle" font-family="Righteous, sans-serif" font-size="24" fill="#FF4D9D">¡CERRAR RED!</text>
+            <!-- cambio de rol -->
+            <text x="180" y="756" text-anchor="middle" font-family="Nunito Sans, sans-serif" font-size="13" fill="#8C7BFF">cambio de roles en 6 s</text>
+          </svg>
+        </div>
+        <p class="caption">Pantalla de una mano: red rosa (tú), brújula con los bichos como puntos amarillos, y el compañero con cuadrado cian. El bicho es solo un resplandor hasta que apuntas bien.</p>
+      </div>
+      <div>
+        <div class="phone">
+          <svg viewBox="0 0 360 780" role="img" aria-label="Pantalla de repetición: mapa de 360 grados con hacia dónde apuntaba cada uno">
+            <defs><filter id="gl2" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+            <rect width="360" height="780" fill="#0E1026"/>
+            <text x="180" y="80" text-anchor="middle" font-family="Righteous, sans-serif" font-size="34" fill="#FFE34D" filter="url(#gl2)">SE ESCAPÓ</text>
+            <text x="180" y="112" text-anchor="middle" font-family="Nunito Sans, sans-serif" font-weight="800" font-size="16" fill="#F2F2F0">la polilla dorada estaba detrás de Leo</text>
+            <!-- mapa 360 -->
+            <g transform="translate(180 330)">
+              <circle r="130" fill="none" stroke="#2A2E5C" stroke-width="2"/>
+              <circle r="90" fill="none" stroke="#2A2E5C" stroke-width="1" stroke-dasharray="4 6"/>
+              <!-- bicho -->
+              <circle cx="0" cy="-118" r="10" fill="#FFE34D" filter="url(#gl2)"/>
+              <text x="0" y="-140" text-anchor="middle" font-family="Nunito Sans, sans-serif" font-size="12" fill="#FFE34D">bicho</text>
+              <!-- Leo apuntaba al lado contrario -->
+              <path d="M0 0 L20 120" stroke="#FF4D9D" stroke-width="6" stroke-linecap="round" filter="url(#gl2)"/>
+              <circle cx="20" cy="120" r="12" fill="none" stroke="#FF4D9D" stroke-width="4"/>
+              <text x="40" y="128" font-family="Nunito Sans, sans-serif" font-weight="800" font-size="13" fill="#FF4D9D">LEO (mano)</text>
+              <!-- ojo Pau gritaba a la derecha -->
+              <path d="M0 0 L110 -40" stroke="#2EE6D6" stroke-width="4" stroke-dasharray="8 6" stroke-linecap="round"/>
+              <rect x="106" y="-50" width="14" height="14" fill="#2EE6D6"/>
+              <text x="60" y="-60" font-family="Nunito Sans, sans-serif" font-weight="800" font-size="13" fill="#2EE6D6">PAU decía "derecha"</text>
+              <!-- tú -->
+              <path d="M0 0 L-80 -60" stroke="#FF4D9D" stroke-width="4" stroke-linecap="round" opacity=".6"/>
+              <circle cx="-80" cy="-60" r="10" fill="none" stroke="#FF4D9D" stroke-width="3" opacity=".6"/>
+              <text x="-128" y="-72" font-family="Nunito Sans, sans-serif" font-weight="800" font-size="13" fill="#FF4D9D" opacity=".8">TÚ</text>
+            </g>
+            <rect x="40" y="520" width="280" height="56" rx="12" fill="#171A3A" stroke="#8C7BFF" stroke-width="2"/>
+            <text x="180" y="555" text-anchor="middle" font-family="Nunito Sans, sans-serif" font-weight="800" font-size="15" fill="#8C7BFF">Leo tenía "espejo": su derecha era su izquierda</text>
+            <rect x="60" y="640" width="240" height="60" rx="30" fill="#FFE34D"/>
+            <text x="180" y="679" text-anchor="middle" font-family="Righteous, sans-serif" font-size="20" fill="#0E1026">COMPARTIR CLIP</text>
+            <text x="180" y="740" text-anchor="middle" font-family="Nunito Sans, sans-serif" font-size="13" fill="#9A9DBF">siguiente ronda en 3</text>
+          </svg>
+        </div>
+        <p class="caption">Repetición: el mapa de 360° muestra dónde estaba el bicho y hacia dónde apuntaba y gritaba cada uno. Es el clip. Las interferencias (violeta) explican el fallo.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Reglas de uso</h2>
+    <div class="notes">
+      <div class="note"><b>Brillo</b>El resplandor es un sprite pre-renderizado (o una sombra difusa de 8-12 px), nunca un shader por fotograma: hay que ir a 60 fps en gama media.</div>
+      <div class="note"><b>Trazo</b>Todo es línea de 4-6 px con extremos redondos; sin rellenos salvo en botones principales.</div>
+      <div class="note"><b>Accesibilidad</b>Rosa = red redonda; cian = cuadrado; amarillo = alas; violeta = parpadeo. Nada se identifica solo por color.</div>
+      <div class="note"><b>Tema claro</b>La partida es siempre oscura (es el diseño); solo los menús y esta página admiten tema claro.</div>
+      <div class="note"><b>Miniatura de TikTok</b>Un trazo neón sobre negro es lo que mejor sobrevive a la compresión y a la pantalla al sol.</div>
+      <div class="note"><b>Qué no hacer</b>Ni 3D realista de bar (ya existe en PC), ni morado-azul degradado de fondo, ni bichos "monstruo": son tontos, no dan miedo.</div>
+    </div>
+  </section>
+
+  <footer>Dirección "Neón de bar" · Fase C · 2026-10-06 · Las fuentes se cargan de Google Fonts; sin red se usan los respaldos declarados.</footer>
+</div>
+</body>
+</html>

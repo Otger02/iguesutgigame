@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Risografía</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Work+Sans:wght@400;600;800&display=swap">
+<style>
+/* Layout: cartel impreso a dos tintas; cada muestra es una "hoja" con las tintas desplazadas; móvil centrado a escala. */
+:root {
+  --bg: #FAF6EE;           /* papel */
+  --fg: #1A1A1A;           /* tinta negra */
+  --muted: #6B665C;
+  --panel: #FFFFFF;
+  --line: #D9D2C3;
+  --riso-blue: #0078BF;    /* tinta 1: tú */
+  --riso-pink: #FF48B0;    /* tinta 2: compañero */
+  --riso-yellow: #FFE800;  /* tinta 3: objetivo, acierto */
+  --riso-red: #FF665E;     /* tinta 4: culpable */
+  --grain: rgba(26,26,26,.08);
+  --display: "Archivo Black", "Arial Black", Impact, sans-serif;
+  --body: "Work Sans", "Helvetica Neue", Arial, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1C1B18; --fg: #F2EEE4; --muted: #B3AC9D; --panel: #262420; --line: #3E3A33;
+    --riso-blue: #3F9BE0; --riso-pink: #FF6FC2; --riso-yellow: #FFE94D; --riso-red: #FF7A72; --grain: rgba(255,255,255,.06);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1C1B18; --fg: #F2EEE4; --muted: #B3AC9D; --panel: #262420; --line: #3E3A33;
+  --riso-blue: #3F9BE0; --riso-pink: #FF6FC2; --riso-yellow: #FFE94D; --riso-red: #FF7A72; --grain: rgba(255,255,255,.06);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.55; padding-inline: 16px; padding-block: 24px 64px; }
+.wrap { max-width: 980px; margin: 0 auto; display: grid; gap: 40px; }
+header { display: grid; gap: 10px; }
+.eyebrow { font-weight: 800; text-transform: uppercase; letter-spacing: .14em; font-size: .78rem; color: var(--muted); }
+h1 { font-family: var(--display); font-weight: 400; font-size: clamp(2.4rem, 8vw, 4.8rem); line-height: .95; margin: 0; text-wrap: balance; color: var(--riso-blue); position: relative; }
+h1::after { content: "Risografía"; position: absolute; left: 4px; top: 4px; color: var(--riso-pink); z-index: -1; opacity: .85; }
+h2 { font-family: var(--display); font-weight: 400; font-size: 1.35rem; margin: 0 0 12px; text-transform: uppercase; letter-spacing: .02em; }
+p { max-width: 72ch; margin: 0; }
+.lead { font-size: 1.1rem; font-weight: 600; }
+.fit { display: inline-flex; gap: 8px; align-items: center; background: var(--riso-yellow); color: #1A1A1A; padding: 6px 12px; font-weight: 800; transform: rotate(1deg); max-width: 100%; flex-wrap: wrap; }
+section { display: grid; gap: 14px; }
+.grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+.swatch { background: var(--panel); border: 2px solid var(--fg); padding: 10px; display: grid; gap: 8px; position: relative; }
+.swatch::before { content: ""; position: absolute; inset: 0; background-image: radial-gradient(var(--grain) 1px, transparent 1px); background-size: 4px 4px; pointer-events: none; }
+.swatch .chip { height: 64px; }
+.swatch b { font-size: .95rem; }
+.swatch small { color: var(--muted); font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: .8rem; }
+.type { display: grid; gap: 16px; background: var(--panel); border: 2px solid var(--fg); padding: 18px; }
+.type .d1 { font-family: var(--display); font-size: clamp(1.8rem, 6vw, 3rem); line-height: .98; text-transform: uppercase; color: var(--riso-blue); text-shadow: 3px 3px 0 var(--riso-pink); }
+.type .d2 { font-family: var(--display); font-size: 1.2rem; text-transform: uppercase; }
+.type .b1 { font-size: 1.05rem; }
+.type .cap { font-size: .8rem; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); font-weight: 800; }
+.type .num { font-variant-numeric: tabular-nums; font-family: var(--display); font-size: 2rem; }
+.chars { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+.char { background: var(--panel); border: 2px solid var(--fg); padding: 10px; display: grid; gap: 6px; justify-items: center; }
+.char svg { width: 100%; max-width: 160px; height: auto; }
+.char b { font-size: .9rem; text-align: center; }
+.char small { color: var(--muted); text-align: center; font-size: .8rem; }
+.screens { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); justify-items: center; }
+.phone { width: 100%; max-width: 300px; aspect-ratio: 9 / 19.5; background: #1A1A1A; border-radius: 34px; padding: 10px; box-shadow: 8px 8px 0 var(--riso-pink); }
+.phone svg { width: 100%; height: 100%; display: block; border-radius: 26px; }
+.caption { font-size: .85rem; color: var(--muted); max-width: 300px; text-align: center; }
+.notes { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.note { background: var(--panel); border: 2px solid var(--fg); padding: 10px 12px; min-width: 0; }
+.note b { display: block; margin-bottom: 4px; text-transform: uppercase; font-size: .85rem; letter-spacing: .04em; }
+footer { color: var(--muted); font-size: .85rem; border-top: 2px solid var(--fg); padding-top: 16px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Dirección visual 3 de 4 · Fase C</div>
+    <h1>Risografía</h1>
+    <p class="lead">Como un fanzine impreso en risografía: dos o tres tintas planas por pantalla, grano visible, colores que no encajan del todo (las tintas se desplazan un par de píxeles) y formas gordas de rotulador. Es gráfico, barato y no se parece a ningún videojuego.</p>
+    <div class="fit">Encaja mejor con: C · Idioma inventado (también A)</div>
+  </header>
+
+  <section>
+    <h2>Paleta</h2>
+    <p>Cuatro tintas de risografía reales y el papel. Regla de oro: cada pantalla usa dos tintas, tres como máximo. La tinta azul es "tú", la rosa es "el otro", la amarilla es "el objetivo" y la roja aparece solo cuando hay culpable. Como solo hay dos tintas, el juego está obligado a distinguir las cosas por forma y por trama, no por color.</p>
+    <div class="grid">
+      <div class="swatch"><div class="chip" style="background:#FAF6EE;border:2px solid #1A1A1A"></div><b>Papel</b><small>#FAF6EE · fondo</small></div>
+      <div class="swatch"><div class="chip" style="background:#0078BF"></div><b>Azul riso</b><small>#0078BF · tú</small></div>
+      <div class="swatch"><div class="chip" style="background:#FF48B0"></div><b>Rosa fluor</b><small>#FF48B0 · el otro</small></div>
+      <div class="swatch"><div class="chip" style="background:#FFE800"></div><b>Amarillo</b><small>#FFE800 · objetivo, acierto</small></div>
+      <div class="swatch"><div class="chip" style="background:#FF665E"></div><b>Rojo</b><small>#FF665E · culpable</small></div>
+      <div class="swatch"><div class="chip" style="background:#1A1A1A"></div><b>Negro</b><small>#1A1A1A · trazo, texto</small></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Tipografía</h2>
+    <div class="type">
+      <div class="cap">Titulares · Archivo Black (respaldo: Arial Black, Impact), siempre en mayúsculas y con la tinta desplazada</div>
+      <div class="d1">Quería decir SALTA</div>
+      <div class="d2">Tú entendiste PERRO</div>
+      <div class="cap">Texto · Work Sans 600/800 (respaldo: Helvetica, Arial)</div>
+      <div class="b1">Cada ronda, un idioma nuevo. Solo puedes usar los signos. El que recibe hace lo que entiende; el móvil dice quién tenía razón.</div>
+      <div class="cap">Números · Archivo Black, tabulares</div>
+      <div class="num">0:31 · 6 de 9</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Siluetas de personajes</h2>
+    <p>Los jugadores son manchas de tinta con brazos de rotulador: la silueta cambia por la postura, no por la ropa. Las dos tintas desplazadas crean "fantasmas" que dan la sensación de movimiento. La mascota es Tinta, una mancha con los ojos mal registrados que siempre dice una cosa y hace otra.</p>
+    <div class="chars">
+      <div class="char">
+        <svg viewBox="0 0 120 150" role="img" aria-label="Mascota: mancha de tinta con ojos desplazados">
+          <path d="M30 110 C 10 80, 20 30, 60 28 C 100 26, 112 78, 92 108 C 80 128, 44 130, 30 110 Z" fill="#FF48B0" opacity=".85" transform="translate(4 3)"/>
+          <path d="M30 110 C 10 80, 20 30, 60 28 C 100 26, 112 78, 92 108 C 80 128, 44 130, 30 110 Z" fill="#0078BF" opacity=".9"/>
+          <circle cx="48" cy="66" r="9" fill="#FAF6EE"/><circle cx="76" cy="66" r="9" fill="#FAF6EE"/>
+          <circle cx="51" cy="68" r="4" fill="#1A1A1A"/><circle cx="73" cy="64" r="4" fill="#1A1A1A"/>
+          <path d="M46 90 q14 10 28 -2" stroke="#1A1A1A" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <path d="M20 70 l-12 -14 M100 70 l12 -14" stroke="#1A1A1A" stroke-width="6" stroke-linecap="round"/>
+        </svg>
+        <b>Tinta</b><small>mascota: dice una cosa y hace otra</small>
+      </div>
+      <div class="char">
+        <svg viewBox="0 0 120 150" role="img" aria-label="Emisor gesticulando">
+          <g transform="translate(3 3)" opacity=".8" fill="#FF48B0"><circle cx="60" cy="34" r="16"/><path d="M40 54 h40 l8 56 h-56 z"/></g>
+          <g fill="#0078BF"><circle cx="60" cy="34" r="16"/><path d="M40 54 h40 l8 56 h-56 z"/></g>
+          <path d="M44 62 l-26 -28 M76 62 l28 -26" stroke="#1A1A1A" stroke-width="6" stroke-linecap="round"/>
+          <path d="M18 34 l-6 -8 M18 34 l-10 2 M18 34 l-2 -10 M104 36 l8 -6 M104 36 l10 4 M104 36 l4 -10" stroke="#1A1A1A" stroke-width="4" stroke-linecap="round"/>
+          <rect x="46" y="110" width="10" height="28" fill="#1A1A1A"/><rect x="64" y="110" width="10" height="28" fill="#1A1A1A"/>
+          <path d="M54 30 h12" stroke="#FAF6EE" stroke-width="4"/>
+        </svg>
+        <b>Emisor</b><small>brazos abiertos, manos "hablando"</small>
+      </div>
+      <div class="char">
+        <svg viewBox="0 0 120 150" role="img" aria-label="Receptor confundido">
+          <g transform="translate(-3 3)" opacity=".8" fill="#0078BF"><circle cx="60" cy="34" r="16"/><path d="M36 54 h48 l4 56 h-56 z"/></g>
+          <g fill="#FF48B0"><circle cx="60" cy="34" r="16"/><path d="M36 54 h48 l4 56 h-56 z"/></g>
+          <path d="M44 70 l-14 20 M76 70 l14 20" stroke="#1A1A1A" stroke-width="6" stroke-linecap="round"/>
+          <circle cx="54" cy="32" r="3" fill="#FAF6EE"/><circle cx="66" cy="32" r="3" fill="#FAF6EE"/>
+          <path d="M84 14 q10 -8 14 2 q2 6 -6 8" stroke="#1A1A1A" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="94" cy="32" r="2.5" fill="#1A1A1A"/>
+          <rect x="46" y="110" width="10" height="28" fill="#1A1A1A"/><rect x="64" y="110" width="10" height="28" fill="#1A1A1A"/>
+        </svg>
+        <b>Receptor</b><small>manos abajo, interrogación</small>
+      </div>
+      <div class="char">
+        <svg viewBox="0 0 120 150" role="img" aria-label="Signos del idioma como pegatinas">
+          <g transform="rotate(-6 36 44)"><rect x="12" y="20" width="48" height="48" fill="#FFE800" stroke="#1A1A1A" stroke-width="3"/><path d="M24 44 l10 10 l16 -22" stroke="#1A1A1A" stroke-width="5" fill="none" stroke-linecap="round"/></g>
+          <g transform="rotate(5 84 44)"><circle cx="84" cy="44" r="24" fill="#0078BF" stroke="#1A1A1A" stroke-width="3"/><path d="M72 44 h24 M84 32 v24" stroke="#FAF6EE" stroke-width="5" stroke-linecap="round"/></g>
+          <g transform="rotate(-3 40 104)"><polygon points="40,78 66,126 14,126" fill="#FF48B0" stroke="#1A1A1A" stroke-width="3"/><circle cx="40" cy="108" r="5" fill="#1A1A1A"/></g>
+          <g transform="rotate(8 86 104)"><rect x="62" y="84" width="48" height="40" rx="20" fill="#FAF6EE" stroke="#1A1A1A" stroke-width="3"/><path d="M74 104 q12 -14 24 0" stroke="#1A1A1A" stroke-width="4" fill="none"/></g>
+        </svg>
+        <b>Signos</b><small>cada signo tiene forma y tinta propias</small>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Pantalla de muestra (Idioma inventado)</h2>
+    <div class="screens">
+      <div>
+        <div class="phone">
+          <svg viewBox="0 0 360 780" role="img" aria-label="Pantalla del emisor: diccionario de signos y objetivo">
+            <defs><pattern id="grano" width="4" height="4" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".7" fill="#1A1A1A" opacity=".12"/></pattern>
+            <pattern id="trama" width="8" height="8" patternUnits="userSpaceOnUse"><path d="M0 8 L8 0" stroke="#1A1A1A" stroke-width="2"/></pattern></defs>
+            <rect width="360" height="780" fill="#FAF6EE"/>
+            <rect width="360" height="780" fill="url(#grano)"/>
+            <!-- cabecera -->
+            <text x="20" y="54" font-family="Archivo Black, Arial Black, sans-serif" font-size="30" fill="#1A1A1A">0:31</text>
+            <rect x="200" y="26" width="140" height="36" fill="#0078BF" transform="translate(3 3)" opacity=".7"/>
+            <rect x="200" y="26" width="140" height="36" fill="#0078BF"/>
+            <text x="212" y="51" font-family="Archivo Black, Arial Black, sans-serif" font-size="16" fill="#FAF6EE">ERES EMISOR</text>
+            <!-- objetivo -->
+            <text x="20" y="104" font-family="Work Sans, sans-serif" font-weight="800" font-size="13" fill="#6B665C" letter-spacing="2">DILE A ANA QUE HAGA</text>
+            <rect x="20" y="116" width="320" height="110" fill="#FFE800" transform="translate(4 4)" opacity=".8"/>
+            <rect x="20" y="116" width="320" height="110" fill="#FFE800" stroke="#1A1A1A" stroke-width="4"/>
+            <text x="40" y="162" font-family="Archivo Black, Arial Black, sans-serif" font-size="28" fill="#1A1A1A">LEVANTA</text>
+            <text x="40" y="204" font-family="Archivo Black, Arial Black, sans-serif" font-size="28" fill="#1A1A1A">EL MÓVIL ×2</text>
+            <!-- diccionario -->
+            <text x="20" y="266" font-family="Work Sans, sans-serif" font-weight="800" font-size="13" fill="#6B665C" letter-spacing="2">IDIOMA DE ESTA RONDA (se borra en 3 s)</text>
+            <g font-family="Work Sans, sans-serif" font-weight="800" font-size="15" fill="#1A1A1A">
+              <rect x="20" y="280" width="320" height="64" fill="#FAF6EE" stroke="#1A1A1A" stroke-width="3"/>
+              <circle cx="54" cy="312" r="20" fill="#0078BF"/><path d="M54 300 v16 l-7 4 M54 316 l7 4" stroke="#FAF6EE" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <text x="90" y="318">tocarse la nariz = LEVANTAR</text>
+              <rect x="20" y="352" width="320" height="64" fill="#FAF6EE" stroke="#1A1A1A" stroke-width="3"/>
+              <rect x="34" y="364" width="40" height="40" fill="#FF48B0"/><polygon points="54,368 58,380 70,380 60,388 64,400 54,392 44,400 48,388 38,380 50,380" fill="#FAF6EE"/>
+              <text x="90" y="390">decir "¡PUM!" = MÓVIL</text>
+              <rect x="20" y="424" width="320" height="64" fill="#FAF6EE" stroke="#1A1A1A" stroke-width="3"/>
+              <polygon points="54,436 76,476 32,476" fill="#FFE800" stroke="#1A1A1A" stroke-width="2"/><text x="90" y="462">aletear = DOS VECES</text>
+              <rect x="20" y="496" width="320" height="64" fill="#FAF6EE" stroke="#1A1A1A" stroke-width="3"/>
+              <rect x="34" y="508" width="40" height="40" rx="20" fill="url(#trama)" stroke="#1A1A1A" stroke-width="2"/><text x="90" y="534">silbar = AL DE LA IZQUIERDA</text>
+            </g>
+            <!-- barra de borrado -->
+            <rect x="20" y="580" width="320" height="14" fill="#FAF6EE" stroke="#1A1A1A" stroke-width="3"/>
+            <rect x="23" y="583" width="190" height="8" fill="#FF48B0"/>
+            <!-- estado del receptor -->
+            <rect x="20" y="620" width="320" height="70" fill="#FAF6EE" stroke="#1A1A1A" stroke-width="3" stroke-dasharray="8 6"/>
+            <text x="36" y="648" font-family="Work Sans, sans-serif" font-weight="800" font-size="14" fill="#6B665C">ANA (receptora)</text>
+            <text x="36" y="674" font-family="Work Sans, sans-serif" font-weight="600" font-size="15" fill="#1A1A1A">está esperando tus signos…</text>
+            <rect x="20" y="712" width="320" height="44" fill="#1A1A1A"/>
+            <text x="180" y="741" text-anchor="middle" font-family="Archivo Black, Arial Black, sans-serif" font-size="15" fill="#FAF6EE">VOLVER A VER EL IDIOMA (−2 s)</text>
+          </svg>
+        </div>
+        <p class="caption">Emisor: el objetivo en tinta amarilla, el diccionario con un icono y una forma por signo (círculo, cuadrado, triángulo, trama), y la barra que lo borra. Dos tintas por bloque.</p>
+      </div>
+      <div>
+        <div class="phone">
+          <svg viewBox="0 0 360 780" role="img" aria-label="Pantalla de fallo: quería decir salta, entendiste perro">
+            <defs><pattern id="grano2" width="4" height="4" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".7" fill="#1A1A1A" opacity=".12"/></pattern></defs>
+            <rect width="360" height="780" fill="#FF665E"/>
+            <rect width="360" height="780" fill="url(#grano2)"/>
+            <text x="180" y="90" text-anchor="middle" font-family="Archivo Black, Arial Black, sans-serif" font-size="40" fill="#1A1A1A">¡NO!</text>
+            <rect x="24" y="130" width="312" height="150" fill="#FAF6EE" transform="translate(5 5)" opacity=".6"/>
+            <rect x="24" y="130" width="312" height="150" fill="#FAF6EE" stroke="#1A1A1A" stroke-width="4"/>
+            <text x="40" y="166" font-family="Work Sans, sans-serif" font-weight="800" font-size="13" fill="#6B665C" letter-spacing="2">PAU QUERÍA DECIR</text>
+            <text x="40" y="214" font-family="Archivo Black, Arial Black, sans-serif" font-size="34" fill="#0078BF">SALTA</text>
+            <text x="40" y="258" font-family="Work Sans, sans-serif" font-weight="600" font-size="15" fill="#1A1A1A">(aletear + tocarse la nariz)</text>
+            <rect x="24" y="300" width="312" height="150" fill="#FAF6EE" transform="translate(-5 5)" opacity=".6"/>
+            <rect x="24" y="300" width="312" height="150" fill="#FAF6EE" stroke="#1A1A1A" stroke-width="4"/>
+            <text x="40" y="336" font-family="Work Sans, sans-serif" font-weight="800" font-size="13" fill="#6B665C" letter-spacing="2">TÚ ENTENDISTE</text>
+            <text x="40" y="384" font-family="Archivo Black, Arial Black, sans-serif" font-size="34" fill="#FF48B0">PERRO</text>
+            <text x="40" y="428" font-family="Work Sans, sans-serif" font-weight="600" font-size="15" fill="#1A1A1A">(ladrar + tocarse la nariz)</text>
+            <!-- mascota -->
+            <g transform="translate(120 470) scale(1)">
+              <path d="M30 110 C 10 80, 20 30, 60 28 C 100 26, 112 78, 92 108 C 80 128, 44 130, 30 110 Z" fill="#FF48B0" opacity=".85" transform="translate(4 3)"/>
+              <path d="M30 110 C 10 80, 20 30, 60 28 C 100 26, 112 78, 92 108 C 80 128, 44 130, 30 110 Z" fill="#0078BF"/>
+              <circle cx="48" cy="66" r="9" fill="#FAF6EE"/><circle cx="76" cy="66" r="9" fill="#FAF6EE"/>
+              <circle cx="51" cy="70" r="4" fill="#1A1A1A"/><circle cx="73" cy="62" r="4" fill="#1A1A1A"/>
+              <path d="M48 96 q12 -10 24 0" stroke="#1A1A1A" stroke-width="5" fill="none" stroke-linecap="round"/>
+            </g>
+            <rect x="40" y="640" width="280" height="56" fill="#1A1A1A"/>
+            <text x="180" y="676" text-anchor="middle" font-family="Archivo Black, Arial Black, sans-serif" font-size="18" fill="#FFE800">CULPABLE: LOS DOS</text>
+            <text x="180" y="740" text-anchor="middle" font-family="Work Sans, sans-serif" font-weight="600" font-size="14" fill="#1A1A1A">siguiente objetivo en 2</text>
+          </svg>
+        </div>
+        <p class="caption">Fallo: lo que se quería decir (azul, "tú") frente a lo que se entendió (rosa, "el otro"), con los signos escritos para que el clip se entienda sin contexto. Fondo rojo solo aquí.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Reglas de uso</h2>
+    <div class="notes">
+      <div class="note"><b>Dos tintas</b>Cada pantalla, dos tintas sobre papel; la tercera solo para "culpable" o "acierto". Si hace falta una cuarta, la pantalla está mal diseñada.</div>
+      <div class="note"><b>Desplazamiento</b>Las tintas se desplazan 3-5 px entre sí en títulos y figuras grandes; nunca en texto pequeño (se vuelve ilegible).</div>
+      <div class="note"><b>Grano</b>Una trama de puntos del 8-12 % sobre todo el fondo; es una sola textura tileable.</div>
+      <div class="note"><b>Accesibilidad</b>Cada signo tiene forma (círculo, cuadrado, triángulo, trama) además de color; tú = azul y borde liso, el otro = rosa y borde discontinuo.</div>
+      <div class="note"><b>Miniatura de TikTok</b>Titulares enormes en mayúsculas con tinta desplazada: funcionan como texto sobreimpreso de los dos primeros segundos.</div>
+      <div class="note"><b>Qué no hacer</b>Nada de degradados, nada de sombras suaves, nada de más de tres tintas; no es "flat design", es tinta sobre papel.</div>
+    </div>
+  </section>
+
+  <footer>Dirección "Risografía" · Fase C · 2026-10-06 · Las fuentes se cargan de Google Fonts; sin red se usan los respaldos declarados.</footer>
+</div>
+</body>
+</html>

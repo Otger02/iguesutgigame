@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Plastilina</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Nunito:wght@400;700;900&display=swap">
+<style>
+/* Layout: mesa de taller con figuras de plastilina; cada muestra es una "peana"; móvil centrado a escala. */
+:root {
+  --bg: #FFF4E3;           /* mantel claro */
+  --fg: #33302E;           /* arcilla oscura */
+  --muted: #7D746C;
+  --panel: #FFFBF4;
+  --line: #E8DCC8;
+  --terra: #D96C4F;        /* terracota: tú */
+  --mint: #6FCBA3;         /* menta: compañero, acierto */
+  --butter: #F7D774;       /* mantequilla: objetivo */
+  --lav: #B59BE6;          /* lavanda: interferencias */
+  --clay-shadow: rgba(51,48,46,.22);
+  --display: "Baloo 2", "Arial Rounded MT Bold", "Trebuchet MS", sans-serif;
+  --body: "Nunito", "Segoe UI", system-ui, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #2A2522; --fg: #FFF4E3; --muted: #BBAE9F; --panel: #35302C; --line: #4A433D;
+    --terra: #E57F63; --mint: #7ED9B2; --butter: #F9DE85; --lav: #C2ABF0; --clay-shadow: rgba(0,0,0,.5);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #2A2522; --fg: #FFF4E3; --muted: #BBAE9F; --panel: #35302C; --line: #4A433D;
+  --terra: #E57F63; --mint: #7ED9B2; --butter: #F9DE85; --lav: #C2ABF0; --clay-shadow: rgba(0,0,0,.5);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.55; padding-inline: 16px; padding-block: 24px 64px; }
+.wrap { max-width: 980px; margin: 0 auto; display: grid; gap: 40px; }
+header { display: grid; gap: 10px; }
+.eyebrow { font-weight: 900; text-transform: uppercase; letter-spacing: .12em; font-size: .78rem; color: var(--muted); }
+h1 { font-family: var(--display); font-weight: 800; font-size: clamp(2.4rem, 8vw, 4.6rem); line-height: 1; margin: 0; text-wrap: balance; color: var(--terra); text-shadow: 0 4px 0 var(--clay-shadow); }
+h2 { font-family: var(--display); font-weight: 800; font-size: 1.4rem; margin: 0 0 12px; }
+p { max-width: 72ch; margin: 0; }
+.lead { font-size: 1.1rem; font-weight: 700; }
+.fit { display: inline-flex; gap: 8px; align-items: center; background: var(--mint); color: #1E3A2E; padding: 8px 14px; border-radius: 999px; font-weight: 900; box-shadow: inset 0 -4px 0 rgba(0,0,0,.12); max-width: 100%; flex-wrap: wrap; }
+section { display: grid; gap: 14px; }
+.grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+.swatch { background: var(--panel); border: 1px solid var(--line); padding: 10px; display: grid; gap: 8px; border-radius: 18px; }
+.swatch .chip { height: 64px; border-radius: 22px 22px 26px 18px / 20px 24px 18px 26px; box-shadow: inset -6px -8px 0 rgba(0,0,0,.10), inset 6px 6px 0 rgba(255,255,255,.35); }
+.swatch b { font-size: .95rem; }
+.swatch small { color: var(--muted); font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: .8rem; }
+.type { display: grid; gap: 16px; background: var(--panel); border: 1px solid var(--line); padding: 18px; border-radius: 22px; }
+.type .d1 { font-family: var(--display); font-weight: 800; font-size: clamp(1.8rem, 6vw, 3rem); line-height: 1.05; color: var(--terra); text-shadow: 0 3px 0 var(--clay-shadow); }
+.type .d2 { font-family: var(--display); font-weight: 700; font-size: 1.3rem; }
+.type .b1 { font-size: 1.05rem; }
+.type .cap { font-size: .8rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); font-weight: 900; }
+.type .num { font-variant-numeric: tabular-nums; font-family: var(--display); font-weight: 800; font-size: 2rem; }
+.chars { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+.char { background: var(--panel); border: 1px solid var(--line); padding: 10px; display: grid; gap: 6px; justify-items: center; border-radius: 18px; }
+.char svg { width: 100%; max-width: 160px; height: auto; }
+.char b { font-size: .9rem; text-align: center; }
+.char small { color: var(--muted); text-align: center; font-size: .8rem; }
+.screens { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); justify-items: center; }
+.phone { width: 100%; max-width: 300px; aspect-ratio: 9 / 19.5; background: #33302E; border-radius: 34px; padding: 10px; box-shadow: 0 18px 40px var(--clay-shadow); }
+.phone svg { width: 100%; height: 100%; display: block; border-radius: 26px; }
+.caption { font-size: .85rem; color: var(--muted); max-width: 300px; text-align: center; }
+.notes { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.note { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; min-width: 0; box-shadow: inset 0 -4px 0 var(--line); }
+.note b { display: block; margin-bottom: 4px; }
+footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--line); padding-top: 16px; }
+@media (prefers-reduced-motion: no-preference) {
+  .squash { animation: squash 1.4s ease-in-out infinite; transform-origin: 50% 100%; }
+  @keyframes squash { 0%, 100% { transform: scale(1, 1); } 50% { transform: scale(1.06, .94); } }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Dirección visual 4 de 4 · Fase C</div>
+    <h1>Plastilina</h1>
+    <p class="lead">Todo parece modelado con los dedos: figuras rechonchas con huellas, bordes imperfectos, colores de plastilina de bote y una luz suave de mesa de taller. Lo que se rompe se aplasta; lo que gana se hincha. Es la dirección con más "cuerpo" y la que mejor mascota puede dar.</p>
+    <div class="fit">Encaja con cualquiera; mejor con A · La mudanza y B · Bichos alrededor</div>
+  </header>
+
+  <section>
+    <h2>Paleta</h2>
+    <p>Colores de bote de plastilina, algo apagados por la mezcla con las manos. El mantel claro es el fondo; cuatro colores con papel fijo; la arcilla oscura para contornos y texto. Como en todas las direcciones, el color no va solo: tú llevas una huella de pulgar, el compañero lleva una bolita encima, el objetivo brilla con un borde de mantequilla y las interferencias están "pellizcadas".</p>
+    <div class="grid">
+      <div class="swatch"><div class="chip" style="background:#FFF4E3;border:1px solid #E8DCC8"></div><b>Mantel</b><small>#FFF4E3 · fondo</small></div>
+      <div class="swatch"><div class="chip" style="background:#D96C4F"></div><b>Terracota</b><small>#D96C4F · tú</small></div>
+      <div class="swatch"><div class="chip" style="background:#6FCBA3"></div><b>Menta</b><small>#6FCBA3 · compañero, acierto</small></div>
+      <div class="swatch"><div class="chip" style="background:#F7D774"></div><b>Mantequilla</b><small>#F7D774 · objetivo</small></div>
+      <div class="swatch"><div class="chip" style="background:#B59BE6"></div><b>Lavanda</b><small>#B59BE6 · interferencias</small></div>
+      <div class="swatch"><div class="chip" style="background:#33302E"></div><b>Arcilla oscura</b><small>#33302E · contornos, texto</small></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Tipografía</h2>
+    <div class="type">
+      <div class="cap">Titulares · Baloo 2 800 (respaldo: Arial Rounded, Trebuchet MS), con sombra de "grosor"</div>
+      <div class="d1">¡Aplastado!</div>
+      <div class="d2">El piano se sentó encima de Leo</div>
+      <div class="cap">Texto · Nunito 700/900 (respaldo: Segoe UI, system-ui)</div>
+      <div class="b1">Inclina el móvil para levantar tu lado. Si el mueble se cae, se aplasta y alguien tiene la culpa. Siguiente mueble en dos segundos.</div>
+      <div class="cap">Números · Baloo 2, tabulares</div>
+      <div class="num">0:52 · 2/5 muebles</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Siluetas de personajes</h2>
+    <p>Figuras de plastilina bajas y anchas, con brazos de churro y huellas de pulgar visibles. La mascota es Bola, una bola de plastilina que cambia de forma según el estado de la partida: tranquila es redonda, nerviosa se alarga, culpable se aplasta.</p>
+    <div class="chars">
+      <div class="char">
+        <svg viewBox="0 0 120 150" role="img" aria-label="Mascota: bola de plastilina con huellas">
+          <ellipse cx="60" cy="140" rx="36" ry="6" fill="#33302E" opacity=".18"/>
+          <g class="squash">
+            <path d="M22 96 C 14 60, 30 30, 62 30 C 96 30, 110 62, 100 96 C 94 118, 30 120, 22 96 Z" fill="#D96C4F"/>
+            <path d="M34 56 C 44 40, 70 38, 84 50" stroke="#FFF4E3" stroke-width="6" fill="none" stroke-linecap="round" opacity=".45"/>
+            <ellipse cx="78" cy="88" rx="10" ry="6" fill="#33302E" opacity=".12" transform="rotate(-20 78 88)"/>
+            <circle cx="48" cy="70" r="7" fill="#33302E"/><circle cx="72" cy="70" r="7" fill="#33302E"/>
+            <circle cx="50" cy="68" r="2" fill="#FFF4E3"/><circle cx="74" cy="68" r="2" fill="#FFF4E3"/>
+            <path d="M48 92 q12 10 24 0" stroke="#33302E" stroke-width="5" fill="none" stroke-linecap="round"/>
+          </g>
+        </svg>
+        <b>Bola</b><small>mascota: cambia de forma con el estado</small>
+      </div>
+      <div class="char">
+        <svg viewBox="0 0 120 150" role="img" aria-label="Jugador de plastilina cargando con los brazos arriba">
+          <ellipse cx="60" cy="142" rx="34" ry="6" fill="#33302E" opacity=".18"/>
+          <ellipse cx="60" cy="34" rx="20" ry="18" fill="#F7D774"/>
+          <path d="M34 54 C 30 90, 30 120, 40 130 L 80 130 C 90 120, 90 90, 86 54 Z" fill="#6FCBA3"/>
+          <path d="M36 62 C 20 50, 14 36, 20 24" stroke="#F7D774" stroke-width="12" fill="none" stroke-linecap="round"/>
+          <path d="M84 62 C 100 50, 106 36, 100 24" stroke="#F7D774" stroke-width="12" fill="none" stroke-linecap="round"/>
+          <circle cx="53" cy="32" r="3" fill="#33302E"/><circle cx="67" cy="32" r="3" fill="#33302E"/>
+          <path d="M54 42 q6 4 12 0" stroke="#33302E" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <ellipse cx="62" cy="96" rx="9" ry="5" fill="#33302E" opacity=".12" transform="rotate(15 62 96)"/>
+        </svg>
+        <b>Asa de delante</b><small>brazos de churro hacia arriba</small>
+      </div>
+      <div class="char">
+        <svg viewBox="0 0 120 150" role="img" aria-label="Jugador de plastilina aplastado por un mueble">
+          <ellipse cx="60" cy="142" rx="44" ry="6" fill="#33302E" opacity=".18"/>
+          <rect x="14" y="40" width="92" height="60" rx="16" fill="#D96C4F"/>
+          <rect x="22" y="48" width="76" height="12" rx="6" fill="#33302E" opacity=".12"/>
+          <path d="M18 110 C 10 128, 40 136, 60 134 C 84 136, 112 128, 102 110 Z" fill="#F7D774"/>
+          <circle cx="46" cy="120" r="3.5" fill="#33302E"/><circle cx="74" cy="120" r="3.5" fill="#33302E"/>
+          <path d="M50 128 h20" stroke="#33302E" stroke-width="3" stroke-linecap="round"/>
+          <path d="M8 118 l-6 10 M112 118 l6 10" stroke="#F7D774" stroke-width="8" stroke-linecap="round"/>
+        </svg>
+        <b>Culpable aplastado</b><small>el fallo se ve en la forma</small>
+      </div>
+      <div class="char">
+        <svg viewBox="0 0 120 150" role="img" aria-label="Bicho de plastilina con alas">
+          <ellipse cx="60" cy="142" rx="30" ry="6" fill="#33302E" opacity=".18"/>
+          <ellipse cx="34" cy="70" rx="24" ry="14" fill="#B59BE6" transform="rotate(-25 34 70)"/>
+          <ellipse cx="86" cy="70" rx="24" ry="14" fill="#B59BE6" transform="rotate(25 86 70)"/>
+          <path d="M40 96 C 34 70, 48 56, 60 56 C 72 56, 86 70, 80 96 C 76 112, 44 112, 40 96 Z" fill="#F7D774"/>
+          <circle cx="52" cy="78" r="5" fill="#33302E"/><circle cx="68" cy="78" r="5" fill="#33302E"/>
+          <path d="M50 52 l-6 -14 M70 52 l6 -14" stroke="#33302E" stroke-width="4" stroke-linecap="round"/>
+          <path d="M44 104 l-10 16 M76 104 l10 16 M60 108 v16" stroke="#33302E" stroke-width="5" stroke-linecap="round"/>
+        </svg>
+        <b>Bicho</b><small>para B: cuerpo blando, alas pellizcadas</small>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Pantalla de muestra (La mudanza, con variante para Bichos)</h2>
+    <div class="screens">
+      <div>
+        <div class="phone">
+          <svg viewBox="0 0 360 780" role="img" aria-label="Pantalla de juego: salón de plastilina con un sofá entre dos asas">
+            <defs>
+              <radialGradient id="luz" cx="40%" cy="20%" r="80%"><stop offset="0" stop-color="#FFFBF4"/><stop offset="1" stop-color="#F3E3CC"/></radialGradient>
+            </defs>
+            <rect width="360" height="780" fill="url(#luz)"/>
+            <!-- suelo y pared -->
+            <path d="M0 540 C 60 520, 300 520, 360 540 L 360 780 L 0 780 Z" fill="#E9D3B6"/>
+            <rect x="60" y="130" width="240" height="170" rx="18" fill="#B59BE6" opacity=".55"/>
+            <rect x="80" y="150" width="200" height="130" rx="12" fill="#FFF4E3"/>
+            <!-- cabecera -->
+            <rect x="20" y="24" width="120" height="48" rx="24" fill="#33302E"/>
+            <text x="44" y="57" font-family="Baloo 2, Arial Rounded MT Bold, sans-serif" font-weight="800" font-size="26" fill="#FFF4E3">0:52</text>
+            <rect x="150" y="24" width="90" height="48" rx="24" fill="#F7D774"/>
+            <text x="170" y="56" font-family="Baloo 2, sans-serif" font-weight="800" font-size="22" fill="#33302E">2/5</text>
+            <rect x="250" y="24" width="90" height="48" rx="24" fill="#D96C4F"/>
+            <text x="266" y="55" font-family="Nunito, sans-serif" font-weight="900" font-size="15" fill="#FFF4E3">TU ASA</text>
+            <!-- gato (interferencia) -->
+            <ellipse cx="290" cy="520" rx="34" ry="18" fill="#B59BE6"/><circle cx="262" cy="506" r="14" fill="#B59BE6"/>
+            <path d="M252 496 l-4 -12 l10 6 M272 496 l4 -12 l-10 6" stroke="#B59BE6" stroke-width="5" stroke-linecap="round"/>
+            <!-- sofá de plastilina inclinado -->
+            <g transform="rotate(-7 180 420)">
+              <rect x="60" y="390" width="240" height="80" rx="30" fill="#D96C4F"/>
+              <rect x="60" y="360" width="70" height="60" rx="26" fill="#D96C4F"/>
+              <rect x="230" y="360" width="70" height="60" rx="26" fill="#D96C4F"/>
+              <path d="M90 410 C 120 396, 240 396, 270 410" stroke="#FFF4E3" stroke-width="8" fill="none" stroke-linecap="round" opacity=".4"/>
+              <ellipse cx="120" cy="446" rx="12" ry="7" fill="#33302E" opacity=".12" transform="rotate(-15 120 446)"/>
+              <ellipse cx="236" cy="440" rx="12" ry="7" fill="#33302E" opacity=".12" transform="rotate(20 236 440)"/>
+              <rect x="80" y="470" width="20" height="22" rx="8" fill="#33302E"/><rect x="260" y="470" width="20" height="22" rx="8" fill="#33302E"/>
+            </g>
+            <!-- asas: huella (tú) y bolita (compañero) -->
+            <g>
+              <circle cx="64" cy="444" r="26" fill="#D96C4F"/>
+              <ellipse cx="64" cy="444" rx="12" ry="16" fill="#33302E" opacity=".18"/>
+              <text x="52" y="486" font-family="Nunito, sans-serif" font-weight="900" font-size="14" fill="#33302E">TÚ</text>
+              <circle cx="300" cy="388" r="22" fill="#6FCBA3"/><circle cx="300" cy="372" r="8" fill="#6FCBA3"/>
+              <text x="286" y="426" font-family="Nunito, sans-serif" font-weight="900" font-size="14" fill="#33302E">PAU</text>
+            </g>
+            <!-- aviso -->
+            <rect x="40" y="560" width="280" height="60" rx="30" fill="#F7D774"/>
+            <path d="M70 600 l16 -28 l16 28 z" fill="#33302E"/>
+            <text x="112" y="598" font-family="Baloo 2, sans-serif" font-weight="800" font-size="22" fill="#33302E">¡Escalón, subid!</text>
+            <!-- nivel -->
+            <rect x="40" y="640" width="280" height="36" rx="18" fill="#FFFBF4" stroke="#33302E" stroke-width="3"/>
+            <rect x="46" y="646" width="124" height="24" rx="12" fill="#D96C4F"/>
+            <rect x="176" y="634" width="8" height="48" rx="4" fill="#33302E"/>
+            <text x="40" y="706" font-family="Nunito, sans-serif" font-weight="900" font-size="16" fill="#33302E">Tu lado está bajo: inclina hacia ti</text>
+            <!-- jugadores -->
+            <g font-family="Nunito, sans-serif" font-weight="900" font-size="13">
+              <rect x="40" y="722" width="60" height="40" rx="20" fill="#D96C4F"/><text x="56" y="748" fill="#FFF4E3">TÚ</text>
+              <rect x="110" y="722" width="60" height="40" rx="20" fill="#6FCBA3"/><text x="122" y="748" fill="#1E3A2E">PAU</text>
+              <rect x="180" y="722" width="60" height="40" rx="20" fill="#FFFBF4" stroke="#33302E" stroke-width="2"/><text x="192" y="748" fill="#33302E">ANA</text>
+              <rect x="250" y="722" width="60" height="40" rx="20" fill="#FFFBF4" stroke="#33302E" stroke-width="2"/><text x="264" y="748" fill="#33302E">LEO</text>
+            </g>
+          </svg>
+        </div>
+        <p class="caption">En juego: el sofá de plastilina con huellas, tu asa con huella de pulgar, el compañero con bolita, el gato lavanda a punto de cruzarse y el nivel como churro.</p>
+      </div>
+      <div>
+        <div class="phone">
+          <svg viewBox="0 0 360 780" role="img" aria-label="Pantalla de culpable: Leo aplastado por el piano">
+            <rect width="360" height="780" fill="#D96C4F"/>
+            <text x="180" y="110" text-anchor="middle" font-family="Baloo 2, Arial Rounded MT Bold, sans-serif" font-weight="800" font-size="44" fill="#FFF4E3">¡Aplastado!</text>
+            <!-- piano encima de Leo -->
+            <g transform="translate(60 180)">
+              <rect x="20" y="40" width="200" height="120" rx="22" fill="#33302E"/>
+              <rect x="36" y="150" width="168" height="22" rx="8" fill="#FFF4E3"/>
+              <g fill="#33302E"><rect x="56" y="150" width="10" height="14"/><rect x="80" y="150" width="10" height="14"/><rect x="116" y="150" width="10" height="14"/><rect x="140" y="150" width="10" height="14"/><rect x="164" y="150" width="10" height="14"/></g>
+              <path d="M0 196 C -8 216, 40 226, 120 224 C 200 226, 248 216, 240 196 Z" fill="#F7D774"/>
+              <circle cx="96" cy="208" r="4" fill="#33302E"/><circle cx="144" cy="208" r="4" fill="#33302E"/>
+              <path d="M108 216 h24" stroke="#33302E" stroke-width="3" stroke-linecap="round"/>
+              <path d="M-14 206 l-10 12 M254 206 l10 12" stroke="#F7D774" stroke-width="10" stroke-linecap="round"/>
+            </g>
+            <rect x="50" y="450" width="260" height="62" rx="31" fill="#33302E"/>
+            <text x="180" y="492" text-anchor="middle" font-family="Baloo 2, sans-serif" font-weight="800" font-size="26" fill="#F7D774">Culpable: Leo</text>
+            <text x="180" y="546" text-anchor="middle" font-family="Nunito, sans-serif" font-weight="900" font-size="17" fill="#FFF4E3">soltó su asa en el escalón</text>
+            <!-- gráfica de asas -->
+            <rect x="40" y="580" width="280" height="100" rx="18" fill="#FFF4E3"/>
+            <polyline points="56,630 110,626 160,624 200,632 240,668 304,672" fill="none" stroke="#D96C4F" stroke-width="7" stroke-linecap="round"/>
+            <polyline points="56,632 110,634 160,630 200,626 240,622 304,618" fill="none" stroke="#6FCBA3" stroke-width="7" stroke-linecap="round" stroke-dasharray="2 12"/>
+            <text x="56" y="604" font-family="Nunito, sans-serif" font-weight="900" font-size="12" fill="#33302E">Leo (continua) · Tú (punteada)</text>
+            <rect x="60" y="704" width="240" height="52" rx="26" fill="#F7D774"/>
+            <text x="180" y="738" text-anchor="middle" font-family="Baloo 2, sans-serif" font-weight="800" font-size="20" fill="#33302E">Siguiente mueble en 2</text>
+          </svg>
+        </div>
+        <p class="caption">Culpable: Leo aplastado bajo el piano. El fallo se ve en la forma (aplastado), no solo en el color; la gráfica distingue por línea continua y punteada.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Reglas de uso</h2>
+    <div class="notes">
+      <div class="note"><b>Volumen</b>Toda figura tiene una luz suave arriba-izquierda y una sombra de contacto; es lo que la hace "de plastilina". Sin contornos negros.</div>
+      <div class="note"><b>Huellas</b>Una o dos huellas de pulgar por figura, nunca más: son textura, no decoración.</div>
+      <div class="note"><b>Movimiento</b>Aplastar y estirar en cada acción; es lo que mejor vende el material y lo que más gracia hace al fallar.</div>
+      <div class="note"><b>Accesibilidad</b>Tú = huella; compañero = bolita; objetivo = borde mantequilla; interferencia = pellizco; culpable = aplastado. El color es refuerzo.</div>
+      <div class="note"><b>Miniatura de TikTok</b>La figura aplastada en terracota sobre mantel se lee a 120 px; evitar escenas con más de tres figuras.</div>
+      <div class="note"><b>Qué no hacer</b>Nada de 3D brillante tipo juguete de plástico; nada de ojos enormes de "casual game"; nada de monos ni plátanos.</div>
+    </div>
+  </section>
+
+  <footer>Dirección "Plastilina" · Fase C · 2026-10-06 · Las fuentes se cargan de Google Fonts; sin red se usan los respaldos declarados.</footer>
+</div>
+</body>
+</html>

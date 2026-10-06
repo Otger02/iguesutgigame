@@ -9,19 +9,25 @@ Party game gratuito para móvil (Google Play y App Store, crossplay) creado desd
 
 - 2026-10-06: repo arrancado por la sesión de Iñaki. Fase A (investigación, 5 documentos) y Fase B (12 semillas, filtro, 3 finalistas, comparativa) terminadas.
 - Finalistas: A · La mudanza, B · Bichos alrededor, C · Idioma inventado. Recomendación: probar los tres en papel esta semana y llevar A a prototipo.
-- Fase C (direcciones visuales) en curso.
-- Nada decidido todavía: concepto, dirección visual y motor esperan a Iñaki y Otger (ver `docs/DECISIONES.md`).
+- Fase C terminada: cuatro direcciones visuales (Cartón y cinta, Neón de bar, Risografía, Plastilina) con HTML y markdown en `docs/03-visual/`.
+- Punto de parada alcanzado: nada decidido todavía; concepto, dirección visual y motor esperan a Iñaki y Otger (ver `docs/DECISIONES.md`, sección "Pendientes").
 - Limitación de la investigación: el proxy de red bloqueó la lectura directa de muchas webs (Steam, tiendas, prensa); las cifras vienen de extractos de buscador y están marcadas para comprobar a mano.
 
 ## En curso
 
 | Sesión | Tarea | Desde |
 |---|---|---|
-| Iñaki | Fase C · Direcciones visuales (3-4 HTML + markdown en `docs/03-visual/`) | 2026-10-06 |
+| — | Nada en curso. La sesión de Iñaki ha parado en el punto de parada del brief (fin de la Fase C). | — |
 
 ## Registro de cambios
 
 _Lo más reciente arriba. Solo se añaden entradas; nunca se borran ni se reescriben las de la otra sesión._
+
+### 2026-10-06 01:45 · Iñaki · Fase C terminada (direcciones visuales) y punto de parada
+
+- **Hecho:** cuatro direcciones de estilo, cada una con página HTML autocontenida (paleta, tipografía, siluetas SVG, pantalla de muestra en móvil y pantalla de culpable) y markdown (referencias, legibilidad, TikTok, mascota, coste, accesibilidad, técnica, 3 prompts). Comprobadas en Chromium a 390 px y 1100 px, en claro y oscuro, sin desbordamiento horizontal. Índice con recomendación por finalista en `docs/03-visual/README.md`.
+- **Archivos:** `docs/03-visual/README.md`, `01-carton-y-cinta.{html,md}`, `02-neon-de-bar.{html,md}`, `03-risografia.{html,md}`, `04-plastilina.{html,md}`; `docs/DECISIONES.md` (sección de pendientes con recomendaciones).
+- **Pendiente de decidir (Iñaki y Otger):** qué finalistas se prueban en papel y cuándo; qué concepto va a prototipo; qué dirección visual; si La tentación es la capa social por defecto. Recomendaciones en `docs/DECISIONES.md`.
 
 ### 2026-10-06 01:05 · Iñaki · Fase B terminada (concepto)
 
@@ -54,5 +60,7 @@ docs/
   01-investigacion/         Fase A · esencia-y-competencia, juegos-virales,
                             mercado-y-cliente, viabilidad-tecnica, requisitos-publicacion
   02-concepto/              Fase B · semillas, filtro, finalistas, comparativa
-  03-visual/                Fase C · direcciones visuales (HTML autocontenido + markdown)
+  03-visual/                Fase C · README (índice y recomendación) + 4 direcciones:
+                            01-carton-y-cinta, 02-neon-de-bar, 03-risografia, 04-plastilina
+                            (HTML autocontenido + markdown cada una)
 ```
