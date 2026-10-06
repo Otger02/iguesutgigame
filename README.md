@@ -16,7 +16,8 @@ Party game gratuito para móvil (Google Play y App Store, crossplay) creado desd
 
 | Sesión | Tarea | Desde |
 |---|---|---|
-| Iñaki | Fase A · Investigación (5 documentos en `docs/01-investigacion/`) | 2026-10-06 |
+| Iñaki | Fase A · Investigación (5 documentos en `docs/01-investigacion/`, con subagentes en paralelo) | 2026-10-06 |
+| Iñaki | Fase B · Borrador de `docs/02-concepto/semillas.md` (se revisará con los resultados de la Fase A) | 2026-10-06 |
 
 ## Registro de cambios
 
