@@ -17,11 +17,17 @@ Party game gratuito para móvil (Google Play y App Store, crossplay) creado desd
 
 | Sesión | Tarea | Desde |
 |---|---|---|
-| Sesión de la rama `claude/gifted-brown-0ge63s` | Rediseño del finalista C (idioma inventado): finalidad, interacción con el móvil, 2-6 jugadores, salas y estilo visual. Ficha `.md` + explicador `.html` | 2026-10-06 |
+| — | Nada en curso. | — |
 
 ## Registro de cambios
 
 _Lo más reciente arriba. Solo se añaden entradas; nunca se borran ni se reescriben las de la otra sesión._
+
+### 2026-10-06 · Sesión `claude/gifted-brown-0ge63s` · Rediseño del finalista C: C2 · Expedición Glifo
+
+- **Hecho:** a petición del usuario, rediseño del idioma inventado para que el juego se juegue desde el móvil (no con gestos), con finalidad, de 2 a 6 jugadores y más rico visualmente. Propuesta: escapar de una ruina alienígena sala a sala descifrando glifos; diccionario repartido entre móviles; voz libre; 8 salas en el banco (MVP con 3); "traductor averiado" como impostor opcional; estilo 2.5D en tinta. Comparativa de 9 finalidades (bomba descartada como marco por el brief y por Keep Talking) y de 4 opciones de estilo (2D, 2.5D, 3D low-poly, 3D realista). Explicador comprobado sin desbordamiento a 390 px y 1100 px. Aparte, se publicó como artifact privado una muestra jugable del C original para dos móviles, sin subirla al repo (en esta fase no se escribe código del juego).
+- **Archivos:** `docs/02-concepto/finalista-C2-expedicion-glifo.md` y `.html` (nuevos); `docs/DECISIONES.md` (propuesta y fila en pendientes). La ficha del C original no se ha tocado.
+- **Pendiente de decidir:** si C2 sustituye a C; si se prueba en papel junto a A; nombre definitivo; si la dirección visual pasa a "Expedición en tinta".
 
 ### 2026-10-06 02:20 · Iñaki · Explicadores visuales de los tres finalistas
 

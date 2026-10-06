@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Expedición Glifo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Work+Sans:wght@400;600;700&display=swap">
+<style>
+/* Layout: fanzine de expedición. Portada con ruina por capas (parallax), luego hojas: finalidad, idioma, salas, móviles, escalado, estilo, riesgos. */
+:root {
+  --paper: #FAF6EE; --ink: #1A1A1A; --muted: #6B665C; --line: #D9D2C3; --card: #FFFFFF;
+  --blue: #0078BF; --pink: #FF48B0; --yellow: #FFE800; --green: #00A95C; --red: #FF665E; --violet: #765BA7;
+  --display: "Archivo Black", "Arial Black", Impact, sans-serif;
+  --body: "Work Sans", "Helvetica Neue", Arial, sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.55;
+  background-image: radial-gradient(rgba(26,26,26,.06) 1px, transparent 1.2px); background-size: 5px 5px;
+  padding-inline: 16px; padding-block: 20px 72px;
+}
+.wrap { max-width: 1040px; margin: 0 auto; display: grid; gap: 64px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 400; text-transform: uppercase; margin: 0; line-height: .95; text-wrap: balance; }
+h1 { font-size: clamp(2.8rem, 11vw, 5rem); overflow-wrap: anywhere; color: var(--blue); text-shadow: 5px 4px 0 var(--pink); letter-spacing: -.01em; }
+h2 { font-size: clamp(1.7rem, 5vw, 2.6rem); }
+h3 { font-size: 1.1rem; line-height: 1.1; }
+p { margin: 0; max-width: 68ch; }
+.label { font-weight: 700; font-size: .75rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+section { display: grid; gap: 20px; }
+.lede { font-size: 1.1rem; }
+.ink { background: var(--yellow); padding: 0 4px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+
+/* portada */
+.hero { display: grid; gap: 24px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 860px) { .hero { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: center; } }
+.hero-text { display: grid; gap: 16px; min-width: 0; }
+.pitch { font-family: var(--display); font-size: clamp(1.15rem, 3vw, 1.5rem); line-height: 1.2; text-transform: uppercase; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { border: 2px solid var(--ink); background: var(--card); padding: 4px 10px; font-weight: 700; font-size: .85rem; }
+.scene { position: relative; border: 4px solid var(--ink); background: #1F1D33; aspect-ratio: 4 / 3.2; max-width: 100%; overflow: hidden; box-shadow: 8px 8px 0 var(--ink); touch-action: none; }
+.scene svg { position: absolute; inset: -6%; width: 112%; height: 112%; transition: transform .25s ease-out; }
+.scene .hint { position: absolute; left: 10px; bottom: 8px; color: var(--paper); font-size: .78rem; font-weight: 600; opacity: .85; }
+
+/* decisiones */
+.table-wrap { overflow-x: auto; border: 3px solid var(--ink); background: var(--card); }
+table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: .95rem; }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-family: var(--display); font-weight: 400; text-transform: uppercase; font-size: .78rem; letter-spacing: .04em; background: var(--ink); color: var(--paper); }
+tr:last-child td { border-bottom: 0; }
+td b { font-weight: 700; }
+
+/* finalidades */
+.goals { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
+.goal { border: 3px solid var(--ink); background: var(--card); padding: 14px; display: grid; gap: 8px; align-content: start; min-width: 0; }
+.goal .verdict { font-family: var(--display); font-size: .78rem; text-transform: uppercase; padding: 3px 8px; justify-self: start; border: 2px solid var(--ink); }
+.goal.win { background: var(--yellow); box-shadow: 6px 6px 0 var(--ink); }
+.v-no { background: var(--red); }
+.v-layer { background: var(--card); }
+.v-yes { background: var(--ink); color: var(--yellow); }
+.v-alt { background: var(--green); color: var(--paper); }
+.goal p { font-size: .92rem; }
+
+/* glifos */
+.glyphs { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+.glyph { border: 3px solid var(--ink); background: var(--card); padding: 12px; display: grid; gap: 6px; justify-items: center; text-align: center; }
+.glyph svg { width: 72px; height: 72px; overflow: visible; }
+.glyph .nick { font-family: var(--display); font-size: .85rem; text-transform: uppercase; line-height: 1.1; }
+.glyph .means { font-size: .8rem; color: var(--muted); font-weight: 600; }
+.g { color: var(--ink); fill: none; stroke: var(--ink); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+
+.grammar { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+.rule { display: grid; grid-template-columns: 76px 1fr; gap: 12px; align-items: center; border-top: 3px solid var(--ink); padding-top: 10px; }
+.rule svg { width: 76px; height: 60px; }
+
+/* mapa de salas */
+.map { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); counter-reset: sala; }
+.room { border: 3px solid var(--ink); padding: 12px; display: grid; gap: 6px; align-content: start; min-height: 150px; position: relative; color: var(--ink); }
+.room .tint { display: flex; gap: 4px; }
+.room .tint i { width: 18px; height: 18px; border: 2px solid var(--ink); display: block; }
+.room h3 { font-size: 1rem; }
+.room p { font-size: .85rem; }
+.room small { font-weight: 700; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; }
+
+/* móviles */
+.phones { display: grid; gap: 22px; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); justify-items: center; }
+.phone-col { display: grid; gap: 10px; justify-items: center; max-width: 270px; width: 100%; }
+.phone { width: 100%; max-width: 250px; background: var(--ink); border-radius: 30px; padding: 9px; }
+.phone svg { width: 100%; height: auto; display: block; border-radius: 22px; }
+.phone-col h3 { text-align: center; }
+.phone-col p { font-size: .9rem; text-align: center; }
+
+/* escalado */
+.two { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); }
+.box { border: 3px solid var(--ink); background: var(--card); padding: 16px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.box.dark { background: var(--ink); color: var(--paper); }
+.box.dark .label { color: var(--yellow); }
+.scale { display: grid; gap: 8px; }
+.scale div { display: grid; grid-template-columns: 54px 1fr; gap: 10px; align-items: start; }
+.scale b { font-family: var(--display); font-size: 1.5rem; line-height: 1; }
+ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+
+/* estilo */
+.styles { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+.style { border: 3px solid var(--ink); background: var(--card); display: grid; align-content: start; min-width: 0; }
+.style svg { width: 100%; height: auto; display: block; border-bottom: 3px solid var(--ink); background: var(--paper); }
+.style div { padding: 12px; display: grid; gap: 6px; }
+.style.win { box-shadow: 6px 6px 0 var(--ink); }
+.style.win div { background: var(--yellow); }
+.style p { font-size: .9rem; }
+.inks { display: flex; flex-wrap: wrap; gap: 10px; }
+.inks span { display: flex; align-items: center; gap: 6px; font-size: .88rem; font-weight: 600; }
+.inks i { width: 22px; height: 22px; border: 2px solid var(--ink); display: block; }
+
+/* riesgos */
+.risks { display: grid; gap: 10px; counter-reset: r; padding: 0; margin: 0; list-style: none; }
+.risks li { counter-increment: r; display: grid; grid-template-columns: 38px 1fr; gap: 12px; align-items: start; }
+.risks li::before { content: counter(r); font-family: var(--display); background: var(--red); border: 2px solid var(--ink); width: 34px; height: 34px; display: grid; place-items: center; }
+footer { border-top: 3px solid var(--ink); padding-top: 14px; font-size: .88rem; color: var(--muted); display: grid; gap: 4px; }
+code { font-size: .9em; }
+@media (prefers-reduced-motion: reduce) { .scene svg { transition: none; } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="g-tenedor" viewBox="0 0 40 40"><path d="M10 4v14M20 4v14M30 4v14M10 18h20M20 18v18"/><circle fill="currentColor" stroke="none" cx="32" cy="31" r="3.5"/></symbol>
+    <symbol id="g-pulpo" viewBox="0 0 40 40"><path d="M10 9h20"/><circle cx="20" cy="17" r="7"/><path d="M14 23q-3 6-7 11M20 24v12M26 23q3 6 7 11"/></symbol>
+    <symbol id="g-calvo" viewBox="0 0 40 40"><path d="M5 17a15 13 0 0 1 30 0z"/><path d="M20 17v14q0 5-5 5"/><circle cx="31" cy="30" r="4"/></symbol>
+    <symbol id="g-escalera" viewBox="0 0 40 40"><path d="M10 4v32M30 4v13M30 24v12M10 11h20M10 21h12M10 30h20"/></symbol>
+    <symbol id="g-ojo" viewBox="0 0 40 40"><path d="M5 16q15-14 30 0q-15 14-30 0z"/><circle fill="currentColor" stroke="none" cx="20" cy="16" r="3.5"/><path d="M13 23l-4 12M27 23l4 12"/></symbol>
+    <symbol id="g-zeta" viewBox="0 0 40 40"><path d="M7 7h26L11 25q12 2 24 11"/></symbol>
+    <symbol id="g-gota" viewBox="0 0 40 40"><path d="M20 4L36 30H4z"/><path d="M20 33q-3 3 0 6q3-3 0-6z"/></symbol>
+    <symbol id="g-caracol" viewBox="0 0 40 40"><path d="M6 34V6h28v28H14V14h12v12h-4"/></symbol>
+    <symbol id="g-sol" viewBox="0 0 40 40"><circle cx="20" cy="18" r="8"/><path d="M20 3v4M20 29v4M5 18h4M31 18h4"/><path d="M12 35q4-4 8 0q4-4 8 0"/></symbol>
+    <symbol id="g-anzuelo" viewBox="0 0 40 40"><path d="M12 4v20q0 8 7 8t7-8M28 4v12"/><circle fill="currentColor" stroke="none" cx="28" cy="20" r="3"/></symbol>
+  </defs>
+</svg>
+
+<div class="wrap">
+
+  <!-- PORTADA -->
+  <header class="hero">
+    <div class="hero-text">
+      <div class="label">Finalista C2 · rediseño del idioma inventado · nombre provisional</div>
+      <h1>Expedición Glifo</h1>
+      <div class="pitch">Escapad de una ruina alienígena descifrando su idioma, cada uno con su móvil.</div>
+      <p class="lede">Habéis caído dentro de una ruina enterrada. Sus puertas, puentes y mecanismos solo obedecen órdenes escritas en glifos, y cada uno lleva un trozo del diccionario en el móvil. Se habla con total libertad: lo difícil es describir un símbolo que no tiene nombre. <span class="ink">El idioma lo acabáis inventando vosotros.</span></p>
+      <div class="chips">
+        <span class="chip">El móvil es el juego</span>
+        <span class="chip">Escape room exprés</span>
+        <span class="chip">2 a 6 jugadores</span>
+        <span class="chip">2.5D en tinta</span>
+        <span class="chip">Sin gestos obligatorios</span>
+      </div>
+    </div>
+    <div class="scene" id="scene" role="img" aria-label="Ilustración por capas de la puerta de la ruina con glifos y la expedición delante">
+      <svg viewBox="0 0 400 320" data-depth="0.15" aria-hidden="true">
+        <rect width="400" height="320" fill="#1F1D33"/>
+        <g fill="#2E2A4F"><rect x="0" y="40" width="70" height="280"/><rect x="330" y="20" width="70" height="300"/><rect x="60" y="0" width="280" height="40"/></g>
+        <g fill="#FF48B0" opacity=".25"><circle cx="60" cy="60" r="2"/><circle cx="350" cy="90" r="2"/><circle cx="300" cy="40" r="1.5"/><circle cx="110" cy="30" r="1.5"/></g>
+      </svg>
+      <svg viewBox="0 0 400 320" data-depth="0.4" aria-hidden="true">
+        <path d="M110 300V120q90-90 180 0v180z" fill="#3A3460"/>
+        <path d="M128 300V128q72-66 144 0v172z" fill="#FFE800"/>
+        <path d="M128 300V128q72-66 144 0v172z" fill="#0078BF" transform="translate(4 3)" opacity=".9"/>
+        <g style="color:#FFE800;stroke:#FFE800;stroke-width:3.5;fill:none;stroke-linecap:round;stroke-linejoin:round">
+          <use href="#g-tenedor" x="150" y="140" width="34" height="34" style="stroke:#FFE800"/>
+          <use href="#g-pulpo" x="216" y="140" width="34" height="34"/>
+          <use href="#g-zeta" x="150" y="196" width="34" height="34"/>
+          <use href="#g-ojo" x="216" y="196" width="34" height="34"/>
+        </g>
+      </svg>
+      <svg viewBox="0 0 400 320" data-depth="0.8" aria-hidden="true">
+        <path d="M0 280q60-14 120-4t160 0q60-12 120 4v40H0z" fill="#16142A"/>
+        <g fill="#FF48B0"><circle cx="90" cy="236" r="12"/><rect x="76" y="250" width="28" height="40" rx="10"/></g>
+        <rect x="102" y="252" width="12" height="20" rx="3" fill="#FFE800" transform="rotate(-18 108 262)"/>
+        <g fill="#00A95C"><circle cx="318" cy="232" r="12"/><rect x="304" y="246" width="28" height="44" rx="10"/></g>
+        <rect x="290" y="250" width="12" height="20" rx="3" fill="#FFE800" transform="rotate(16 296 260)"/>
+        <g fill="#FAF6EE"><circle cx="200" cy="244" r="11"/><rect x="187" y="257" width="26" height="36" rx="10"/></g>
+        <path d="M168 220q14-12 26-2" stroke="#FAF6EE" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <text x="132" y="214" font-family="Archivo Black, Arial Black, sans-serif" font-size="14" fill="#FAF6EE">¡EL PULPO!</text>
+      </svg>
+      <span class="hint">Mueve el dedo o el ratón: así se verá cada sala al inclinar el móvil.</span>
+    </div>
+  </header>
+
+  <!-- DECISIONES -->
+  <section>
+    <div class="label">Lo que propongo decidir</div>
+    <h2>Siete decisiones, una línea cada una</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Pregunta</th><th>Propuesta</th><th>Por qué</th></tr></thead>
+        <tbody>
+          <tr><td><b>Finalidad</b></td><td>Escapar de una ruina alienígena, sala a sala</td><td>Da progreso, variedad y final. La bomba está vetada por el brief y es Keep Talking</td></tr>
+          <tr><td><b>Papel del móvil</b></td><td>Es el juego: controles, sensores y glifos</td><td>Lo que pedís, y además arregla el modo a distancia del C original</td></tr>
+          <tr><td><b>Comunicación</b></td><td>Voz libre; el reto es describir glifos</td><td>Funciona en un bar y por llamada</td></tr>
+          <tr><td><b>Jugadores</b></td><td>2 a 6; cada móvil aporta controles y un trozo del diccionario</td><td>Nadie mira: todos preguntan y todos actúan</td></tr>
+          <tr><td><b>Impostor</b></td><td>No fijo. El traductor averiado (y modo traición opcional desde 4)</td><td>Culpable y revelación sin convertirlo en deducción social</td></tr>
+          <tr><td><b>Estilo</b></td><td>2.5D: capas 2D con parallax, tinta risográfica</td><td>Rico y asequible; el 3D no aporta risa</td></tr>
+          <tr><td><b>Salas</b></td><td>Banco de 8; 4-5 por expedición, al azar; núcleo final</td><td>No se repite y cada sala enseña una interacción</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- FINALIDAD -->
+  <section>
+    <div class="label">1 · La finalidad</div>
+    <h2>¿Para qué hablamos en glifos?</h2>
+    <p>Vuestras tres ideas y seis más, valoradas por encaje con el idioma, originalidad y capacidad de dar salas distintas. El brief dice "nada de bombas por defecto" y nada de reskins de Keep Talking, BOMBANANA! o Spaceteam.</p>
+    <div class="goals">
+      <div class="goal win"><span class="verdict v-yes">Recomendada</span><h3>Expedición a una ruina alienígena</h3><p>Escape room más descifrado. El idioma es la cerradura: tiene sentido que exista, que cambie de sala a sala y que se aprenda por el camino.</p></div>
+      <div class="goal"><span class="verdict v-alt">Base</span><h3>Escape room</h3><p>Da salas, progreso y final. Solo, es terreno conocido (We Were Here, Escape Simulator); con idioma generado y móvil en la mesa, no.</p></div>
+      <div class="goal"><span class="verdict v-no">Descartar como marco</span><h3>Desactivar una bomba</h3><p>Describir símbolos raros para desactivar una bomba es el módulo de teclado de Keep Talking. Sobrevive reinventada: el núcleo de la ruina que colapsa en la sala final.</p></div>
+      <div class="goal"><span class="verdict v-layer">Capa opcional</span><h3>Encontrar al impostor</h3><p>Deducción social saturada (Splash y clones). Mejor como el traductor averiado: alguien con un glifo mal traducido, que muchas veces ni lo sabe.</p></div>
+      <div class="goal"><span class="verdict v-alt">Alternativa</span><h3>Atraco a una cámara acorazada</h3><p>Mismo esqueleto de salas y gadgets. El idioma sería un adorno y no el motivo del juego.</p></div>
+      <div class="goal"><span class="verdict v-layer">Sala especial</span><h3>Embajada alienígena</h3><p>Traducir en directo a un embajador que se ofende. Muy gracioso, pero con poca acción física para ser el juego entero.</p></div>
+      <div class="goal"><span class="verdict v-layer">Sala especial</span><h3>Cocina para un rey alien</h3><p>Recetas en glifos. Como marco recuerda a Overcooked; como sala, funciona.</p></div>
+      <div class="goal"><span class="verdict v-no">Descartar</span><h3>Criar a una criatura</h3><p>Original, pero sin tensión ni final: no aguanta una noche de bar.</p></div>
+      <div class="goal"><span class="verdict v-no">Descartar</span><h3>Aterrizar una nave</h3><p>Paneles, órdenes y nave: es Spaceteam.</p></div>
+    </div>
+  </section>
+
+  <!-- IDIOMA -->
+  <section>
+    <div class="label">2 · El idioma</div>
+    <h2>Glifos sin nombre que bautizáis vosotros</h2>
+    <p>Cada expedición genera un alfabeto nuevo combinando piezas (base, rasgo, modificador). Los glifos se diseñan para que <b>parezcan algo</b>: así salen nombres absurdos que el grupo repite toda la partida. Estos son ejemplos con el apodo que les pondría una mesa cualquiera.</p>
+    <div class="glyphs">
+      <div class="glyph"><svg class="g" viewBox="0 0 40 40"><use href="#g-tenedor"/></svg><div class="nick">El tenedor tuerto</div><div class="means">= izquierda</div></div>
+      <div class="glyph"><svg class="g" viewBox="0 0 40 40"><use href="#g-pulpo"/></svg><div class="nick">El pulpo con gorro</div><div class="means">= girar</div></div>
+      <div class="glyph"><svg class="g" viewBox="0 0 40 40"><use href="#g-calvo"/></svg><div class="nick">El calvo con paraguas</div><div class="means">= arriba</div></div>
+      <div class="glyph"><svg class="g" viewBox="0 0 40 40"><use href="#g-escalera"/></svg><div class="nick">La escalera rota</div><div class="means">= puente</div></div>
+      <div class="glyph"><svg class="g" viewBox="0 0 40 40"><use href="#g-ojo"/></svg><div class="nick">El ojo con patas</div><div class="means">= mirar</div></div>
+      <div class="glyph"><svg class="g" viewBox="0 0 40 40"><use href="#g-zeta"/></svg><div class="nick">La zeta borracha</div><div class="means">= derecha</div></div>
+      <div class="glyph"><svg class="g" viewBox="0 0 40 40"><use href="#g-gota"/></svg><div class="nick">El triángulo que llora</div><div class="means">= agua</div></div>
+      <div class="glyph"><svg class="g" viewBox="0 0 40 40"><use href="#g-caracol"/></svg><div class="nick">El caracol cuadrado</div><div class="means">= puerta</div></div>
+    </div>
+    <h3 style="margin-top:8px">Gramática que se descubre fallando</h3>
+    <div class="grammar">
+      <div class="rule"><svg class="g" viewBox="0 0 50 40"><circle cx="25" cy="20" r="18"/><use href="#g-sol" x="12" y="7" width="26" height="26"/></svg><p><b>En un círculo = NO.</b> "No gires". Aparece en la segunda o tercera sala, sin aviso.</p></div>
+      <div class="rule"><svg class="g" viewBox="0 0 50 40"><use href="#g-anzuelo" x="0" y="6" width="26" height="26"/><use href="#g-anzuelo" x="22" y="6" width="26" height="26"/></svg><p><b>Repetido = dos veces.</b> Lo intuye casi todo el mundo; sirve de primera regla.</p></div>
+      <div class="rule"><svg class="g" viewBox="0 0 50 40"><use href="#g-calvo" x="12" y="6" width="26" height="26" transform="rotate(180 25 19)"/></svg><p><b>Boca abajo = al revés.</b> El calvo con paraguas del revés ya no es arriba, es abajo.</p></div>
+    </div>
+  </section>
+
+  <!-- SALAS -->
+  <section>
+    <div class="label">3 · Las salas</div>
+    <h2>Una expedición: 4-5 salas y el núcleo</h2>
+    <p>Cada sala tiene sus dos tintas, para que se reconozca al instante en un vídeo, y una interacción distinta con el móvil. Partida completa: 8-12 minutos, con oxígeno compartido; cada fallo cuesta oxígeno. Al menos la mitad de las salas obligan a mover el cuerpo, que es lo que se ve desde fuera.</p>
+    <div class="map">
+      <div class="room" style="background:#CFE6F5"><div class="tint"><i style="background:var(--blue)"></i><i style="background:var(--yellow)"></i></div><small>Tutorial</small><h3>La Puerta</h3><p>Girar ruedas hasta el glifo que pide la inscripción.</p></div>
+      <div class="room" style="background:#FFD6EC"><div class="tint"><i style="background:var(--pink)"></i><i style="background:var(--green)"></i></div><small>Inclinar</small><h3>El Puente</h3><p>Cada móvil sostiene un tablón; la inscripción dice qué lado sube.</p></div>
+      <div class="room" style="background:#2A2A2A;color:var(--paper)"><div class="tint"><i style="background:var(--ink);border-color:var(--paper)"></i><i style="background:var(--yellow)"></i></div><small>Mirar alrededor</small><h3>La Cámara Oscura</h3><p>Tu linterna ilumina glifos que necesita otro.</p></div>
+      <div class="room" style="background:#FFF6A8"><div class="tint"><i style="background:var(--yellow)"></i><i style="background:var(--violet)"></i></div><small>Trazar</small><h3>El Escriba</h3><p>Uno describe un glifo; otro lo dibuja con el dedo.</p></div>
+      <div class="room" style="background:#CDEFD9"><div class="tint"><i style="background:var(--green)"></i><i style="background:var(--blue)"></i></div><small>Juntar móviles</small><h3>Los Conductos</h3><p>Tuberías que salen de un móvil y entran en el de al lado.</p></div>
+      <div class="room" style="background:#FFD9D6"><div class="tint"><i style="background:var(--red)"></i><i style="background:var(--yellow)"></i></div><small>Pasar el móvil</small><h3>La Reliquia</h3><p>La inscripción viaja de mano en mano hasta quien sabe leerla.</p></div>
+      <div class="room" style="background:#E3DBF2"><div class="tint"><i style="background:var(--violet)"></i><i style="background:var(--pink)"></i></div><small>Ritmo</small><h3>El Órgano</h3><p>Tocar los glifos de la melodía a tiempo, cada uno en su móvil.</p></div>
+      <div class="room" style="background:var(--ink);color:var(--yellow)"><div class="tint"><i style="background:var(--red)"></i><i style="background:var(--yellow)"></i></div><small>Final · la bomba reinventada</small><h3>El Núcleo</h3><p style="color:var(--paper)">La ruina colapsa y mezcla todo lo visto. No se desactiva: se escapa.</p></div>
+    </div>
+  </section>
+
+  <!-- MÓVILES -->
+  <section>
+    <div class="label">4 · El móvil es el juego</div>
+    <h2>Tres salas vistas desde el móvil</h2>
+    <p>Cada pantalla se dibuja como un objeto de la ruina (piedra, latón, cristal) y se maneja con el dedo o moviendo el móvil. La voz es el canal; el móvil es el mando y la pieza.</p>
+    <div class="phones">
+      <div class="phone-col">
+        <div class="phone"><svg viewBox="0 0 250 460" role="img" aria-label="La Puerta: inscripción arriba, fragmento de diccionario y rueda de glifos">
+          <rect width="250" height="460" fill="#CFE6F5"/>
+          <rect x="0" y="0" width="250" height="44" fill="#0078BF"/>
+          <text x="14" y="29" font-family="Archivo Black, Arial Black, sans-serif" font-size="15" fill="#FFE800">LA PUERTA</text>
+          <rect x="150" y="13" width="86" height="18" fill="#FAF6EE"/><rect x="150" y="13" width="58" height="18" fill="#FF665E"/>
+          <text x="193" y="26" text-anchor="middle" font-family="Work Sans, Arial, sans-serif" font-weight="700" font-size="10" fill="#1A1A1A">OXÍGENO</text>
+          <text x="14" y="70" font-family="Work Sans, Arial, sans-serif" font-weight="700" font-size="10" fill="#1A1A1A" letter-spacing="1.2">INSCRIPCIÓN</text>
+          <rect x="14" y="78" width="222" height="56" fill="#FAF6EE" stroke="#1A1A1A" stroke-width="3"/>
+          <g class="g"><use href="#g-pulpo" x="30" y="86" width="40" height="40"/><use href="#g-tenedor" x="86" y="86" width="40" height="40"/><use href="#g-tenedor" x="142" y="86" width="40" height="40"/></g>
+          <text x="14" y="160" font-family="Work Sans, Arial, sans-serif" font-weight="700" font-size="10" fill="#1A1A1A" letter-spacing="1.2">TU TROZO DEL DICCIONARIO</text>
+          <rect x="14" y="168" width="106" height="44" fill="#FAF6EE" stroke="#1A1A1A" stroke-width="2"/>
+          <g class="g"><use href="#g-zeta" x="20" y="174" width="30" height="30"/></g><text x="56" y="195" font-family="Archivo Black, Arial Black, sans-serif" font-size="11" fill="#1A1A1A">DERECHA</text>
+          <rect x="130" y="168" width="106" height="44" fill="#FAF6EE" stroke="#1A1A1A" stroke-width="2"/>
+          <g class="g"><use href="#g-ojo" x="136" y="174" width="30" height="30"/></g><text x="172" y="195" font-family="Archivo Black, Arial Black, sans-serif" font-size="11" fill="#1A1A1A">MIRAR</text>
+          <circle cx="125" cy="330" r="92" fill="#0078BF" stroke="#1A1A1A" stroke-width="4"/>
+          <circle cx="125" cy="330" r="58" fill="#CFE6F5" stroke="#1A1A1A" stroke-width="3"/>
+          <g style="fill:none;stroke:#FFE800;stroke-width:4;stroke-linecap:round;stroke-linejoin:round"><use href="#g-calvo" x="111" y="244" width="28" height="28"/><use href="#g-escalera" x="186" y="316" width="28" height="28"/><use href="#g-caracol" x="111" y="388" width="28" height="28"/><use href="#g-gota" x="36" y="316" width="28" height="28"/></g>
+          <path d="M125 236l-10 -12h20z" fill="#FF48B0" stroke="#1A1A1A" stroke-width="2"/>
+          <text x="125" y="336" text-anchor="middle" font-family="Archivo Black, Arial Black, sans-serif" font-size="12" fill="#1A1A1A">GIRA</text>
+        </svg></div>
+        <h3>La Puerta</h3>
+        <p>Ves la inscripción, pero no sabes qué dice. Tienes "derecha" y "mirar"; el pulpo y el tenedor los tiene otro.</p>
+      </div>
+
+      <div class="phone-col">
+        <div class="phone"><svg viewBox="0 0 250 460" role="img" aria-label="El Puente: tablón inclinado y nivel de burbuja">
+          <rect width="250" height="460" fill="#FFD6EC"/>
+          <rect x="0" y="0" width="250" height="44" fill="#FF48B0"/>
+          <text x="14" y="29" font-family="Archivo Black, Arial Black, sans-serif" font-size="15" fill="#1A1A1A">EL PUENTE</text>
+          <rect x="150" y="13" width="86" height="18" fill="#FAF6EE"/><rect x="150" y="13" width="44" height="18" fill="#FF665E"/>
+          <path d="M0 330q60-30 125-10t125-10v150H0z" fill="#00A95C"/>
+          <rect x="20" y="88" width="210" height="62" fill="#FAF6EE" stroke="#1A1A1A" stroke-width="3"/>
+          <g class="g"><use href="#g-escalera" x="34" y="98" width="40" height="40"/><use href="#g-calvo" x="104" y="98" width="40" height="40"/></g>
+          <text x="160" y="125" font-family="Work Sans, Arial, sans-serif" font-weight="700" font-size="10" fill="#1A1A1A">en el móvil</text>
+          <text x="160" y="138" font-family="Work Sans, Arial, sans-serif" font-weight="700" font-size="10" fill="#1A1A1A">de Ana</text>
+          <g transform="rotate(-9 125 230)">
+            <rect x="20" y="214" width="210" height="30" fill="#A5733B" stroke="#1A1A1A" stroke-width="3"/>
+            <path d="M60 214v30M100 214v30M140 214v30M180 214v30" stroke="#1A1A1A" stroke-width="2"/>
+          </g>
+          <circle cx="40" cy="190" r="12" fill="#1A1A1A"/><rect x="30" y="200" width="20" height="16" rx="6" fill="#1A1A1A"/>
+          <rect x="45" y="372" width="160" height="30" rx="15" fill="#FAF6EE" stroke="#1A1A1A" stroke-width="3"/>
+          <circle cx="98" cy="387" r="10" fill="#FFE800" stroke="#1A1A1A" stroke-width="2"/>
+          <path d="M125 372v30" stroke="#1A1A1A" stroke-width="2"/>
+          <text x="125" y="430" text-anchor="middle" font-family="Archivo Black, Arial Black, sans-serif" font-size="12" fill="#1A1A1A">INCLINA PARA NIVELAR</text>
+        </svg></div>
+        <h3>El Puente</h3>
+        <p>Inclinas el móvil para sostener tu tablón. Ana tiene la inscripción y grita qué lado sube; tú tienes que adivinar si "la escalera rota" eres tú.</p>
+      </div>
+
+      <div class="phone-col">
+        <div class="phone"><svg viewBox="0 0 250 460" role="img" aria-label="El Escriba: comparación entre el glifo descrito y el dibujado">
+          <rect width="250" height="460" fill="#FFF6A8"/>
+          <rect x="0" y="0" width="250" height="44" fill="#765BA7"/>
+          <text x="14" y="29" font-family="Archivo Black, Arial Black, sans-serif" font-size="15" fill="#FFE800">EL ESCRIBA</text>
+          <text x="125" y="78" text-anchor="middle" font-family="Archivo Black, Arial Black, sans-serif" font-size="13" fill="#1A1A1A">PAU TE LO DESCRIBIÓ</text>
+          <rect x="45" y="88" width="160" height="128" fill="#FAF6EE" stroke="#0078BF" stroke-width="4"/>
+          <g class="g"><use href="#g-calvo" x="75" y="102" width="100" height="100"/></g>
+          <text x="125" y="250" text-anchor="middle" font-family="Archivo Black, Arial Black, sans-serif" font-size="13" fill="#1A1A1A">TÚ DIBUJASTE</text>
+          <rect x="45" y="260" width="160" height="128" fill="#FAF6EE" stroke="#FF48B0" stroke-width="4"/>
+          <path d="M68 330q20-56 58-40q30 14 50 40M125 300q-4 40 6 64q4 10-12 12M150 350q10 4 14 -4" fill="none" stroke="#FF48B0" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="166" cy="356" r="6" fill="none" stroke="#FF48B0" stroke-width="4"/>
+          <rect x="30" y="404" width="190" height="34" fill="#1A1A1A"/>
+          <text x="125" y="426" text-anchor="middle" font-family="Archivo Black, Arial Black, sans-serif" font-size="12" fill="#FFE800">PARECIDO: 41 % · −1 OXÍGENO</text>
+        </svg></div>
+        <h3>El Escriba</h3>
+        <p>Describes sin enseñar; el otro dibuja con el dedo. La comparación lado a lado es el clip que se comparte solo.</p>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Interacción</th><th>Cómo se hace</th><th>Sensor</th><th>Fiabilidad</th></tr></thead>
+        <tbody>
+          <tr><td>Girar rueda, palanca, mantener pulsado</td><td>Con el dedo</td><td>Táctil</td><td>Alta</td></tr>
+          <tr><td>Trazar un glifo</td><td>Dibujar lo que te describen</td><td>Táctil y reconocedor de trazos sencillo</td><td>Alta</td></tr>
+          <tr><td>Inclinar para equilibrar</td><td>Mantener el móvil nivelado</td><td>Giroscopio y acelerómetro</td><td>Alta en gama media; respaldo táctil</td></tr>
+          <tr><td>Linterna alrededor</td><td>Mover el móvil para iluminar</td><td>Giroscopio</td><td>Media: deriva en Android barato</td></tr>
+          <tr><td>Agitar, golpecitos</td><td>Sacudir para limpiar interferencias</td><td>Acelerómetro</td><td>Alta</td></tr>
+          <tr><td>Pasar el móvil / lanzar</td><td>En mano en presencial; gesto de lanzar a distancia</td><td>Acelerómetro y asientos de la sala</td><td>Media</td></tr>
+          <tr><td>Juntar móviles</td><td>Cable que cruza de una pantalla a otra</td><td>Táctil sincronizado</td><td>Media: latencia</td></tr>
+          <tr><td>Soplar, cámara</td><td colspan="2">Fuera del MVP: el soplido no es fiable en un bar y choca con la voz a distancia</td><td>Baja</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ESCALADO -->
+  <section>
+    <div class="label">5 · De 2 a 6</div>
+    <h2>Cada móvil aporta algo</h2>
+    <div class="two">
+      <div class="box">
+        <p>Cada sala reparte tres cosas: <b>inscripción</b> (la orden), <b>diccionario</b> (en trozos) y <b>controles</b>.</p>
+        <div class="scale">
+          <div><b>2</b><span>Media inscripción, medio diccionario y la mitad de los controles cada uno. Preguntándose sin parar.</span></div>
+          <div><b>3</b><span>La inscripción en uno (rota cada sala); diccionario en tres trozos; controles en los tres.</span></div>
+          <div><b>4-6</b><span>Trozos con solapamiento (cada glifo está en dos móviles) y dos inscripciones a la vez en salas grandes. Dos conversaciones cruzadas en la mesa.</span></div>
+          <div><b>+1</b><span>Quien llega entra como <b>porteador</b>: solo controles. Ejecuta y aprende escuchando.</span></div>
+        </div>
+        <p style="font-size:.92rem">Si alguien se va, sus glifos ya estaban duplicados; sus controles se quedan fijos y la sala retira las órdenes que dependían de él.</p>
+      </div>
+      <div class="box dark">
+        <div class="label">El impostor, reinventado</div>
+        <h3 style="font-size:1.5rem">El traductor averiado</h3>
+        <p>En algunas salas, el trozo de diccionario de alguien tiene un glifo mal traducido, y <b>no lo sabe</b>. Defiende su error con total seguridad. Al acabar la sala: "¡El traductor de Pau estaba averiado!".</p>
+        <p><b>Modo traición (opcional, desde 4):</b> el averiado sí lo sabe y gana si el equipo falla sin descubrirle. Cambia de persona y casi nunca toca: nunca es un rol fijo.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ESTILO -->
+  <section>
+    <div class="label">6 · Estilo visual</div>
+    <h2>2.5D en tinta: rico sin pagar el 3D</h2>
+    <div class="styles">
+      <div class="style"><svg viewBox="0 0 200 110" aria-hidden="true"><rect x="40" y="20" width="120" height="70" fill="#0078BF"/><path d="M70 90V50q30-30 60 0v40z" fill="#FFE800"/></svg><div><h3>2D plano</h3><p>Barato y ligero, pero el giroscopio no mueve nada y se queda corto para lo que pedís.</p></div></div>
+      <div class="style win"><svg viewBox="0 0 200 110" aria-hidden="true"><rect x="22" y="14" width="120" height="70" fill="#765BA7" opacity=".5"/><rect x="40" y="22" width="120" height="70" fill="#0078BF"/><path d="M70 92V52q30-30 60 0v40z" fill="#FFE800"/><rect x="58" y="78" width="100" height="18" fill="#FF48B0"/></svg><div><h3>2.5D · recomendado</h3><p>Capas ilustradas que se desplazan al inclinar el móvil. Cada móvil es una ventana a la sala. Coste medio, rinde bien en Android de gama media.</p></div></div>
+      <div class="style"><svg viewBox="0 0 200 110" aria-hidden="true"><path d="M60 30l50-14 50 14v50l-50 16-50-16z" fill="#00A95C"/><path d="M60 30l50 14 50-14M110 44v52" stroke="#1A1A1A" stroke-width="2" fill="none"/></svg><div><h3>3D low-poly</h3><p>Más vistoso, pero modelado, cámaras e iluminación duplican el coste y calientan el móvil. La risa la pone la gente, no el render.</p></div></div>
+      <div class="style"><svg viewBox="0 0 200 110" aria-hidden="true"><circle cx="100" cy="55" r="38" fill="#6B665C"/><circle cx="88" cy="44" r="12" fill="#D9D2C3"/></svg><div><h3>3D realista</h3><p>Fuera de alcance para dos personas, y además pesa demasiado para una descarga de fiesta.</p></div></div>
+    </div>
+    <div class="box">
+      <h3>Dirección "Expedición en tinta"</h3>
+      <p>Evolución de la dirección Risografía: papel, tinta negra y <b>dos tintas por sala</b>, grano visible y tintas desplazadas que tiemblan cuando la ruina se enfada. Los glifos se estampan en trazo gordo; los paneles del móvil parecen objetos (piedra, latón, cristal) y no botones de app. Mascota posible: el guardián de la ruina, una mancha con un ojo que habla en glifos en las transiciones.</p>
+      <div class="inks">
+        <span><i style="background:var(--blue)"></i>Azul riso</span>
+        <span><i style="background:var(--pink)"></i>Rosa fluor</span>
+        <span><i style="background:var(--yellow)"></i>Amarillo</span>
+        <span><i style="background:var(--green)"></i>Verde</span>
+        <span><i style="background:var(--violet)"></i>Violeta</span>
+        <span><i style="background:var(--red)"></i>Rojo (solo oxígeno y culpable)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIKTOK + REMOTO -->
+  <section class="two">
+    <div class="box">
+      <div class="label">7 · Para TikTok</div>
+      <h3>Cuatro momentos que se comparten solos</h3>
+      <ul>
+        <li><b>El Escriba:</b> "lo que te describí" frente a "lo que dibujaste".</li>
+        <li><b>El bautizo:</b> al final, los glifos de la expedición con los nombres que les habéis puesto.</li>
+        <li><b>Culpable:</b> "Querían el tenedor tuerto; Pau giró el pulpo".</li>
+        <li><b>Desde fuera:</b> la mesa inclinando móviles a la vez y gritando nombres absurdos.</li>
+      </ul>
+    </div>
+    <div class="box">
+      <div class="label">8 · Presencial y a distancia</div>
+      <h3>Funciona igual de bien por llamada</h3>
+      <p>En presencial se habla en la mesa y el ruido del bar no molesta. A distancia, la voz va por llamada; pasar el móvil se convierte en lanzarlo y juntar móviles, en puertos con nombre de glifo. Es una mejora clara sobre el C original, que a distancia perdía los gestos.</p>
+    </div>
+  </section>
+
+  <!-- RIESGOS -->
+  <section>
+    <div class="label">9 · Riesgos</div>
+    <h2>Lo que puede salir mal</h2>
+    <ol class="risks">
+      <li><span><b>"Keep Talking en móvil".</b> Describir símbolos raros es su módulo de teclado. La diferencia tiene que estar en que todos tienen controles y un trozo del idioma, en que el idioma tiene gramática y se aprende, y en las acciones físicas. Prueba: decir el pitch a 5 personas que lo conozcan.</span></li>
+      <li><span><b>Coste de contenido.</b> Ocho salas son ocho minijuegos. MVP con tres (La Puerta, El Puente, El Escriba) y un núcleo sencillo. Es más caro que La mudanza.</span></li>
+      <li><span><b>Menos espectáculo para una cámara externa</b> que con gestos. Por eso la regla de "mitad de salas con cuerpo".</span></li>
+      <li><span><b>Sincronía en tiempo real</b> en El Puente y El Órgano (10-20 actualizaciones por segundo), como en La mudanza.</span></li>
+      <li><span><b>Accesibilidad:</b> glifos grandes y codificados por forma, no solo por color; nombre sugerido opcional para quien lo necesite.</span></li>
+    </ol>
+  </section>
+
+  <section class="box">
+    <div class="label">10 · Prueba en papel · 20 minutos</div>
+    <p>12 glifos a rotulador en tarjetas, un trozo de diccionario por persona (3-4 entradas), tarjetas de inscripción de 2-3 glifos y tres objetos de colores. Ronda 1: La Puerta en papel (ejecutar la orden con los objetos). Ronda 2: El Escriba (uno describe, otro dibuja). Ronda 3: aparece "glifo en círculo = NO" sin explicarlo. Medid el tiempo hasta el primer acierto, cuántos apodos salen, qué fallos hacen reír y cómo lo describe alguien que mira desde fuera.</p>
+  </section>
+
+  <footer>
+    <span>Explicador del finalista C2 · ficha completa en <code>docs/02-concepto/finalista-C2-expedicion-glifo.md</code></span>
+    <span>Rediseño del finalista C original (<code>finalista-C-idioma-inventado.md</code>), que se conserva como referencia. Nada de esto está decidido hasta que conste en <code>docs/DECISIONES.md</code>.</span>
+  </footer>
+</div>
+
+<script>
+(() => {
+  const scene = document.getElementById("scene");
+  if (!scene || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const layers = [...scene.querySelectorAll("svg[data-depth]")];
+  const move = (x, y) => layers.forEach(l => { const d = +l.dataset.depth * 22; l.style.transform = `translate(${-x * d}px, ${-y * d}px)`; });
+  scene.addEventListener("pointermove", e => {
+    const r = scene.getBoundingClientRect();
+    move((e.clientX - r.left) / r.width - .5, (e.clientY - r.top) / r.height - .5);
+  });
+  scene.addEventListener("pointerleave", () => move(0, 0));
+})();
+</script>
+</body>
+</html>
