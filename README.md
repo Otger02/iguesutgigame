@@ -17,7 +17,7 @@ Party game gratuito para móvil (Google Play y App Store, crossplay) creado desd
 
 | Sesión | Tarea | Desde |
 |---|---|---|
-| — | Nada en curso. La sesión de Iñaki ha parado en el punto de parada del brief (fin de la Fase C). | — |
+| Sesión de la rama `claude/gifted-brown-0ge63s` | Rediseño del finalista C (idioma inventado): finalidad, interacción con el móvil, 2-6 jugadores, salas y estilo visual. Ficha `.md` + explicador `.html` | 2026-10-06 |
 
 ## Registro de cambios
 
