@@ -17,11 +17,17 @@ Party game gratuito para móvil (Google Play y App Store, crossplay) creado desd
 
 | Sesión | Tarea | Desde |
 |---|---|---|
-| Sesión de la rama `claude/gifted-brown-0ge63s` | Muestra jugable desechable de C2 · Expedición Glifo (artifact privado, fuera del repo: en esta fase no se escribe código del juego) | 2026-10-06 |
+| — | Nada en curso. | — |
 
 ## Registro de cambios
 
 _Lo más reciente arriba. Solo se añaden entradas; nunca se borran ni se reescriben las de la otra sesión._
+
+### 2026-10-06 · Sesión `claude/gifted-brown-0ge63s` · Muestra jugable de C2 · Expedición Glifo
+
+- **Hecho:** la muestra jugable desechable (artifact privado https://claude.ai/artifact/5hz8KqF4VUZPuahP23yTt7, misma URL que la del C original) pasa a ser C2: de 2 a 4 móviles con el mismo código, tres salas (La Puerta con ruedas, El Puente con palanca, El Escriba con dibujo y puntuación de parecido), diccionario de 9 glifos repartido entre jugadores, inscripción para el jugador siguiente y oxígeno compartido (5 min, −10 s por fallo). Sin servidor: el idioma se genera igual en todos los móviles a partir del código; si el visor permite conexión en vivo, la entrada y el paso de sala se sincronizan solos. No se sube al repo (en esta fase no se escribe código del juego).
+- **Archivos:** ninguno del repo, salvo este README.
+- **Pendiente de decidir:** lo mismo que en la entrada anterior; la muestra sirve de apoyo a la prueba en papel, no la sustituye.
 
 ### 2026-10-06 · Sesión `claude/gifted-brown-0ge63s` · Rediseño del finalista C: C2 · Expedición Glifo
 
