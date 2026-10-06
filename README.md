@@ -17,7 +17,7 @@ Party game gratuito para móvil (Google Play y App Store, crossplay) creado desd
 
 | Sesión | Tarea | Desde |
 |---|---|---|
-| — | Nada en curso. | — |
+| Sesión de la rama `claude/gifted-brown-0ge63s` | Muestra jugable desechable de C2 · Expedición Glifo (artifact privado, fuera del repo: en esta fase no se escribe código del juego) | 2026-10-06 |
 
 ## Registro de cambios
 
