@@ -17,7 +17,7 @@ Party game gratuito para móvil (Google Play y App Store, crossplay) creado desd
 
 | Sesión | Tarea | Desde |
 |---|---|---|
-| — | Nada en curso. La sesión de Iñaki ha parado en el punto de parada del brief (fin de la Fase C). | — |
+| Iñaki | Explicadores visuales de los tres finalistas (HTML en `docs/02-concepto/` + artefactos), a petición de Iñaki | 2026-10-06 |
 
 ## Registro de cambios
 
