@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bichos alrededor</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Nunito+Sans:wght@400;700&display=swap">
+<style>
+/* Layout: storyboard de seis viñetas (cámara externa + lo que dice el móvil), luego "qué ve cada uno", escalado 2-6, clip y prueba en papel. */
+:root {
+  --bg: #F1F4F8; --fg: #16213A; --muted: #5E6A85; --panel: #FFFFFF; --line: #D5DCE8;
+  --eye: #1C9C8C;      /* ojos */
+  --hand: #E0407F;     /* manos */
+  --bug: #F2B705;      /* bicho */
+  --danger: #B8322A;
+  --display: "Bricolage Grotesque", "Trebuchet MS", "Segoe UI", sans-serif;
+  --body: "Nunito Sans", "Segoe UI", system-ui, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #141A2A; --fg: #EEF2F8; --muted: #A4AEC4; --panel: #1E2639; --line: #33405A; --eye: #3FC2B0; --hand: #F06AA0; --bug: #F7C84A; --danger: #E0564C; color-scheme: dark; }
+}
+:root[data-theme="dark"] { --bg: #141A2A; --fg: #EEF2F8; --muted: #A4AEC4; --panel: #1E2639; --line: #33405A; --eye: #3FC2B0; --hand: #F06AA0; --bug: #F7C84A; --danger: #E0564C; color-scheme: dark; }
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.5; padding-inline: 16px; padding-block: 24px 64px; }
+.wrap { max-width: 960px; margin: 0 auto; display: grid; gap: 36px; }
+.eyebrow { font-weight: 700; text-transform: uppercase; letter-spacing: .12em; font-size: .75rem; color: var(--muted); }
+h1 { font-family: var(--display); font-weight: 800; font-size: clamp(2.2rem, 7vw, 3.8rem); line-height: 1; margin: 0; text-wrap: balance; }
+h2 { font-family: var(--display); font-weight: 700; font-size: 1.3rem; margin: 0 0 10px; }
+p { max-width: 70ch; margin: 0; }
+header { display: grid; gap: 12px; }
+.pitch { font-family: var(--display); font-weight: 700; font-size: clamp(1.2rem, 3.5vw, 1.6rem); line-height: 1.25; color: var(--hand); text-wrap: balance; }
+.fantasy { font-size: 1.05rem; }
+.board { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; display: grid; grid-template-rows: auto auto 1fr; min-width: 0; }
+.panel svg { width: 100%; height: auto; display: block; background: var(--bg); border-bottom: 1px solid var(--line); }
+.panel .step { padding: 10px 12px 0; font-family: var(--display); font-weight: 700; font-size: 1rem; }
+.panel .step small { display: block; color: var(--muted); font-family: var(--body); font-weight: 700; font-size: .72rem; text-transform: uppercase; letter-spacing: .1em; margin-bottom: 2px; }
+.panel .cap { padding: 6px 12px 12px; font-size: .92rem; }
+.panel .cap b { color: var(--hand); }
+.panel .cap i { color: var(--eye); font-style: normal; font-weight: 700; }
+.phones { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); justify-items: center; }
+.phone { width: 100%; max-width: 250px; background: var(--fg); border-radius: 28px; padding: 8px; }
+.phone svg { width: 100%; height: auto; display: block; border-radius: 22px; }
+.pcap { font-size: .88rem; color: var(--muted); max-width: 250px; text-align: center; margin-top: 8px; }
+.scale { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+.scale div { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px; min-width: 0; }
+.scale b { font-family: var(--display); font-size: 1.1rem; display: block; }
+.scale span { font-size: .88rem; color: var(--muted); }
+.two { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.box { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; min-width: 0; }
+.box.clip { border-color: var(--hand); }
+ol { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+.tag { display: inline-block; background: var(--bug); color: #16213A; font-weight: 700; font-size: .78rem; padding: 2px 8px; border-radius: 999px; }
+footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--line); padding-top: 14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="persona" viewBox="0 0 40 70"><circle cx="20" cy="11" r="9"/><rect x="9" y="22" width="22" height="34" rx="9"/><rect x="12" y="54" width="6" height="14" rx="3"/><rect x="22" y="54" width="6" height="14" rx="3"/></symbol>
+      <symbol id="movil" viewBox="0 0 14 24"><rect x="0" y="0" width="14" height="24" rx="3" fill="#16213A"/><rect x="2" y="3" width="10" height="17" rx="1" fill="#F1F4F8"/></symbol>
+      <symbol id="bicho" viewBox="0 0 40 30"><ellipse cx="20" cy="18" rx="9" ry="11" fill="#F2B705"/><ellipse cx="9" cy="12" rx="9" ry="5" fill="#F2B705" opacity=".7" transform="rotate(-25 9 12)"/><ellipse cx="31" cy="12" rx="9" ry="5" fill="#F2B705" opacity=".7" transform="rotate(25 31 12)"/><circle cx="17" cy="15" r="2" fill="#16213A"/><circle cx="23" cy="15" r="2" fill="#16213A"/></symbol>
+    </defs>
+  </svg>
+
+  <header>
+    <div class="eyebrow">Finalista B · explicador visual</div>
+    <h1>Bichos alrededor</h1>
+    <div class="pitch">Unos ven los bichos alrededor de la mesa, otros tienen la red.</div>
+    <p class="fantasy">La mesa está rodeada de bichos invisibles. El mundo está en 360° a vuestro alrededor y para mirar se mueve el móvil como una ventana. Unos móviles son ojos: ven los bichos pero no tienen red. Otros son manos: tienen red pero no ven nada. Los ojos gritan direcciones, las manos apuntan y cazan. Cada 20 segundos cambiáis de papel.</p>
+  </header>
+
+  <section>
+    <h2>Una ronda en seis viñetas</h2>
+    <div class="board">
+
+      <div class="panel">
+        <svg viewBox="0 0 300 180" role="img" aria-label="Cuatro amigos sentados alrededor de una mesa con bichos invisibles a su alrededor">
+          <rect width="300" height="180" fill="#F1F4F8"/>
+          <ellipse cx="150" cy="115" rx="80" ry="26" fill="#D5DCE8"/>
+          <use href="#persona" x="70" y="60" width="34" height="60" fill="#1C9C8C"/>
+          <use href="#persona" x="130" y="48" width="34" height="60" fill="#E0407F"/>
+          <use href="#persona" x="190" y="60" width="34" height="60" fill="#1C9C8C"/>
+          <use href="#persona" x="130" y="100" width="34" height="60" fill="#E0407F"/>
+          <g opacity=".35"><use href="#bicho" x="20" y="20" width="36" height="27"/><use href="#bicho" x="250" y="30" width="36" height="27"/><use href="#bicho" x="236" y="130" width="36" height="27"/><use href="#bicho" x="30" y="140" width="36" height="27"/></g>
+          <text x="150" y="24" text-anchor="middle" font-family="Nunito Sans, sans-serif" font-size="12" fill="#5E6A85">los bichos están alrededor, no en la mesa</text>
+        </svg>
+        <div class="step"><small>1 · 15 segundos</small>Sala con QR</div>
+        <div class="cap">Igual que en cualquier finalista: QR, apodo automático, dentro. El juego reparte <i>ojos</i> y <b>manos</b> y empieza la ronda.</div>
+      </div>
+
+      <div class="panel">
+        <svg viewBox="0 0 300 180" role="img" aria-label="Dos pantallas: eres ojo, eres mano">
+          <rect width="300" height="180" fill="#F1F4F8"/>
+          <rect x="30" y="20" width="110" height="140" rx="14" fill="#16213A"/>
+          <rect x="38" y="28" width="94" height="124" rx="8" fill="#1C9C8C"/>
+          <text x="85" y="78" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="20" fill="#F1F4F8">ERES</text>
+          <text x="85" y="102" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="20" fill="#F1F4F8">OJO</text>
+          <text x="85" y="128" text-anchor="middle" font-family="Nunito Sans, sans-serif" font-size="10" fill="#F1F4F8">ves los bichos</text>
+          <text x="85" y="140" text-anchor="middle" font-family="Nunito Sans, sans-serif" font-size="10" fill="#F1F4F8">no tienes red</text>
+          <rect x="160" y="20" width="110" height="140" rx="14" fill="#16213A"/>
+          <rect x="168" y="28" width="94" height="124" rx="8" fill="#E0407F"/>
+          <text x="215" y="78" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="20" fill="#F1F4F8">ERES</text>
+          <text x="215" y="102" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="20" fill="#F1F4F8">MANO</text>
+          <text x="215" y="128" text-anchor="middle" font-family="Nunito Sans, sans-serif" font-size="10" fill="#F1F4F8">tienes red</text>
+          <text x="215" y="140" text-anchor="middle" font-family="Nunito Sans, sans-serif" font-size="10" fill="#F1F4F8">no ves nada</text>
+        </svg>
+        <div class="step"><small>2 · roles</small>Ojos y manos</div>
+        <div class="cap">Dos palabras y un icono bastan. El recién llegado siempre entra como <b>mano</b>: mover el móvil para apuntar y tocar para cazar.</div>
+      </div>
+
+      <div class="panel">
+        <svg viewBox="0 0 300 180" role="img" aria-label="Un ojo grita direcciones y la mano gira el móvil hacia el techo">
+          <rect width="300" height="180" fill="#F1F4F8"/>
+          <use href="#persona" x="50" y="70" width="40" height="70" fill="#1C9C8C"/>
+          <path d="M90 96 L124 70" stroke="#1C9C8C" stroke-width="6" stroke-linecap="round"/>
+          <use href="#persona" x="190" y="70" width="40" height="70" fill="#E0407F"/>
+          <path d="M210 76 L222 46" stroke="#E0407F" stroke-width="6" stroke-linecap="round"/>
+          <use href="#movil" x="216" y="26" width="14" height="24" transform="rotate(35 223 38)"/>
+          <use href="#bicho" x="250" y="12" width="36" height="27"/>
+          <rect x="16" y="26" width="178" height="24" rx="12" fill="#1C9C8C"/>
+          <text x="105" y="42" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="700" font-size="12" fill="#F1F4F8">¡DETRÁS DE TI, ARRIBA!</text>
+          <text x="210" y="165" text-anchor="middle" font-family="Nunito Sans, sans-serif" font-weight="700" font-size="12" fill="#E0407F">¿mi arriba o tu arriba?</text>
+        </svg>
+        <div class="step"><small>3 · 45-60 segundos de ronda</small>Dirigir a gritos</div>
+        <div class="cap">El <i>ojo</i> ve el bicho en su pantalla y una flecha hacia él. La <b>mano</b> solo ve su red. "A tu derecha" nunca es la misma derecha: ahí está el malentendido que da risa.</div>
+      </div>
+
+      <div class="panel">
+        <svg viewBox="0 0 300 180" role="img" aria-label="La red se cierra sobre el bicho">
+          <rect width="300" height="180" fill="#F1F4F8"/>
+          <use href="#persona" x="130" y="80" width="40" height="70" fill="#E0407F"/>
+          <path d="M150 86 L150 50" stroke="#E0407F" stroke-width="6" stroke-linecap="round"/>
+          <circle cx="150" cy="40" r="26" fill="none" stroke="#E0407F" stroke-width="5"/>
+          <path d="M150 14 v52 M124 40 h52" stroke="#E0407F" stroke-width="3" opacity=".6"/>
+          <use href="#bicho" x="132" y="27" width="36" height="27"/>
+          <g stroke="#F2B705" stroke-width="3" fill="none" stroke-linecap="round"><path d="M110 20 l-8 -8 M190 20 l8 -8 M106 60 l-10 4 M194 60 l10 4"/></g>
+          <text x="150" y="170" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="700" font-size="14" fill="#16213A">¡Cazado! punto para todos</text>
+        </svg>
+        <div class="step"><small>4 · caza</small>Cerrar la red</div>
+        <div class="cap">Cuando la mano apunta bien, el bicho aparece nítido en su pantalla y un toque cierra la red. Algunos bichos exigen dos redes a la vez: dos manos coordinadas por dos ojos.</div>
+      </div>
+
+      <div class="panel">
+        <svg viewBox="0 0 300 180" role="img" aria-label="Cambio de roles: los ojos pasan a ser manos">
+          <rect width="300" height="180" fill="#F1F4F8"/>
+          <use href="#persona" x="60" y="60" width="40" height="70" fill="#1C9C8C"/>
+          <use href="#persona" x="200" y="60" width="40" height="70" fill="#E0407F"/>
+          <path d="M110 80 C 130 50, 170 50, 190 80" stroke="#16213A" stroke-width="3" fill="none" marker-end="url(#ar)"/>
+          <path d="M190 110 C 170 140, 130 140, 110 110" stroke="#16213A" stroke-width="3" fill="none" marker-end="url(#ar)"/>
+          <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#16213A"/></marker></defs>
+          <rect x="70" y="20" width="160" height="24" rx="12" fill="#16213A"/>
+          <text x="150" y="36" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="700" font-size="12" fill="#F1F4F8">CAMBIO EN 3… 2… 1</text>
+          <text x="150" y="168" text-anchor="middle" font-family="Nunito Sans, sans-serif" font-size="12" fill="#5E6A85">cada 20 segundos, sin parar la ronda</text>
+        </svg>
+        <div class="step"><small>5 · rotación</small>Cada 20 segundos cambiáis</div>
+        <div class="cap">Quien era ojo pasa a mano. Nadie se queda en el rol cómodo y todos acaban gritando y girando. También es cómo entran los que llegan tarde y cómo se absorbe a quien se va.</div>
+      </div>
+
+      <div class="panel">
+        <svg viewBox="0 0 300 180" role="img" aria-label="Mapa de 360 grados: el bicho estaba detrás y la mano apuntaba delante">
+          <rect width="300" height="180" fill="#F1F4F8"/>
+          <circle cx="150" cy="95" r="62" fill="none" stroke="#D5DCE8" stroke-width="3"/>
+          <circle cx="150" cy="95" r="8" fill="#16213A"/>
+          <use href="#bicho" x="132" y="18" width="36" height="27"/>
+          <path d="M150 95 L170 150" stroke="#E0407F" stroke-width="6" stroke-linecap="round"/>
+          <text x="180" y="164" font-family="Nunito Sans, sans-serif" font-weight="700" font-size="11" fill="#E0407F">Leo apuntaba aquí</text>
+          <path d="M150 95 L205 70" stroke="#1C9C8C" stroke-width="4" stroke-dasharray="6 5" stroke-linecap="round"/>
+          <text x="296" y="62" text-anchor="end" font-family="Nunito Sans, sans-serif" font-weight="700" font-size="11" fill="#1C9C8C">Pau: "derecha"</text>
+          <rect x="20" y="20" width="120" height="24" rx="12" fill="#B8322A"/>
+          <text x="80" y="36" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="12" fill="#F1F4F8">SE ESCAPÓ</text>
+        </svg>
+        <div class="step"><small>6 · el clip</small>El mapa de lo que pasó</div>
+        <div class="cap">Al acabar, tres segundos con el mapa de 360°: dónde estaba el bicho, hacia dónde apuntaba cada mano y qué decía cada ojo. Es el clip, y explica el chiste sin palabras. Siguiente ronda en 3.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>Qué ve cada uno</h2>
+    <p>La información repartida es espacial: el ojo sabe dónde, la mano puede cazar. Pantallas esquemáticas; el estilo visual se decide en la Fase C.</p>
+    <div class="phones" style="margin-top:14px">
+      <div>
+        <div class="phone"><svg viewBox="0 0 250 440" role="img" aria-label="Pantalla del ojo: ve bichos alrededor y una flecha">
+          <rect width="250" height="440" fill="#16213A"/>
+          <text x="14" y="36" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="22" fill="#F1F4F8">0:38</text>
+          <rect x="166" y="16" width="70" height="26" rx="13" fill="#1C9C8C"/><text x="201" y="34" text-anchor="middle" font-family="Nunito Sans, sans-serif" font-weight="700" font-size="11" fill="#F1F4F8">OJO</text>
+          <circle cx="125" cy="130" r="60" fill="none" stroke="#33405A" stroke-width="2"/>
+          <path d="M125 70 L133 86 L117 86 Z" fill="#1C9C8C"/>
+          <circle cx="168" cy="100" r="6" fill="#F2B705"/><circle cx="90" cy="170" r="6" fill="#F2B705"/>
+          <text x="125" y="212" text-anchor="middle" font-family="Nunito Sans, sans-serif" font-size="11" fill="#A4AEC4">dónde miras tú · puntos = bichos</text>
+          <use href="#bicho" x="150" y="250" width="70" height="52"/>
+          <path d="M90 300 L140 275" stroke="#1C9C8C" stroke-width="6" stroke-linecap="round"/>
+          <polygon points="148,271 136,268 140,282" fill="#1C9C8C"/>
+          <rect x="20" y="340" width="210" height="60" rx="12" fill="#1E2639" stroke="#E0407F" stroke-width="2"/>
+          <text x="32" y="364" font-family="Nunito Sans, sans-serif" font-weight="700" font-size="12" fill="#E0407F">LEO (MANO) apunta al suelo</text>
+          <text x="32" y="386" font-family="Nunito Sans, sans-serif" font-size="12" fill="#F1F4F8">dile: arriba y a su derecha</text>
+          <text x="125" y="424" text-anchor="middle" font-family="Nunito Sans, sans-serif" font-size="11" fill="#A4AEC4">cambio de roles en 6 s</text>
+        </svg></div>
+        <div class="pcap">Ojo: ve los bichos, una flecha hacia el más cercano y hacia dónde apunta su mano.</div>
+      </div>
+      <div>
+        <div class="phone"><svg viewBox="0 0 250 440" role="img" aria-label="Pantalla de la mano: solo la red y un resplandor">
+          <rect width="250" height="440" fill="#16213A"/>
+          <text x="14" y="36" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="22" fill="#F1F4F8">0:38</text>
+          <rect x="160" y="16" width="76" height="26" rx="13" fill="#E0407F"/><text x="198" y="34" text-anchor="middle" font-family="Nunito Sans, sans-serif" font-weight="700" font-size="11" fill="#F1F4F8">MANO</text>
+          <defs><radialGradient id="fog"><stop offset="0" stop-color="#F2B705" stop-opacity=".5"/><stop offset="1" stop-color="#F2B705" stop-opacity="0"/></radialGradient></defs>
+          <circle cx="175" cy="150" r="50" fill="url(#fog)"/>
+          <circle cx="125" cy="200" r="70" fill="none" stroke="#E0407F" stroke-width="5"/>
+          <path d="M125 130 v140 M55 200 h140" stroke="#E0407F" stroke-width="2" opacity=".5"/>
+          <rect x="20" y="320" width="210" height="50" rx="12" fill="#1E2639" stroke="#1C9C8C" stroke-width="2"/>
+          <text x="32" y="341" font-family="Nunito Sans, sans-serif" font-weight="700" font-size="12" fill="#1C9C8C">PAU (OJO) te está viendo</text>
+          <text x="32" y="360" font-family="Nunito Sans, sans-serif" font-size="12" fill="#F1F4F8">escúchale, no mires la mesa</text>
+          <rect x="40" y="386" width="170" height="40" rx="20" fill="#E0407F"/>
+          <text x="125" y="412" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="16" fill="#F1F4F8">¡CERRAR RED!</text>
+        </svg></div>
+        <div class="pcap">Mano: solo su red y un resplandor cuando el bicho está cerca. Mueve el móvil para apuntar.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>De 2 a 6 jugadores</h2>
+    <div class="scale">
+      <div><b>2</b><span>Un ojo y una mano; intercambiáis cada 20 segundos.</span></div>
+      <div><b>3</b><span>Un ojo dirigiendo a dos manos: confusión garantizada.</span></div>
+      <div><b>4</b><span>Dos y dos; cada ojo adopta "su" mano o se solapan a gritos.</span></div>
+      <div><b>5</b><span>Dos ojos, tres manos y bichos de dos redes.</span></div>
+      <div><b>6</b><span>Tres y tres, con bichos "espejo" que solo ve un ojo concreto.</span></div>
+    </div>
+  </section>
+
+  <section class="two">
+    <div class="box clip">
+      <h2>El momento para TikTok</h2>
+      <p>Desde fuera: gente girando el móvil hacia el techo, la barra y la espalda, mientras otros señalan con el brazo y gritan "¡no, tu otra derecha!". Lo que guarda el juego: el mapa de 360° con el bicho y hacia dónde apuntaba cada uno. <span class="tag">cámara externa</span> <span class="tag">clip automático</span></p>
+    </div>
+    <div class="box">
+      <h2>Presencial y a distancia</h2>
+      <p>Cada móvil usa su propio marco: "a tu derecha 90°" significa lo mismo para todos aunque estén sentados en sitios distintos o cada uno en su casa. A distancia funciona igual o mejor; solo hace falta voz.</p>
+    </div>
+  </section>
+
+  <section class="box">
+    <h2>Prueba en papel, 15 minutos, esta semana</h2>
+    <ol>
+      <li><b>Material:</b> 10-12 pósits, celo, la linterna del móvil, un pañuelo, un cronómetro.</li>
+      <li><b>Pegad los pósits</b> por la habitación a distintas alturas: pared, lámpara, respaldo de una silla, la espalda de alguien. Son los bichos.</li>
+      <li><b>La mano</b> se pone en el centro con los ojos tapados y la linterna en la mano; solo gira sobre sí misma y sube o baja el brazo. <b>El ojo</b> solo puede hablar. Caza cuando el ojo dice "¡ya!" y la luz está sobre el pósit.</li>
+      <li><b>60 segundos</b> por ronda; con 4-6 personas, dos o tres parejas a la vez gritando en la misma habitación. Rotad roles cada 20 segundos.</li>
+      <li><b>Medir:</b> pósits cazados, errores de izquierda y derecha, risas, si la gente de pie se choca, y si un vídeo de 15 segundos se entiende sin explicación.</li>
+    </ol>
+  </section>
+
+  <footer>Explicador del finalista B · ficha completa en <code>docs/02-concepto/finalista-B-bichos-alrededor.md</code> · dirección visual recomendada: Neón de bar.</footer>
+</div>
+</body>
+</html>

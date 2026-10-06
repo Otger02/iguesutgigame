@@ -17,11 +17,17 @@ Party game gratuito para móvil (Google Play y App Store, crossplay) creado desd
 
 | Sesión | Tarea | Desde |
 |---|---|---|
-| Iñaki | Explicadores visuales de los tres finalistas (HTML en `docs/02-concepto/` + artefactos), a petición de Iñaki | 2026-10-06 |
+| — | Nada en curso. La sesión de Iñaki ha parado en el punto de parada del brief (fin de la Fase C). | — |
 
 ## Registro de cambios
 
 _Lo más reciente arriba. Solo se añaden entradas; nunca se borran ni se reescriben las de la otra sesión._
+
+### 2026-10-06 02:20 · Iñaki · Explicadores visuales de los tres finalistas
+
+- **Hecho:** a petición de Iñaki, una página HTML autocontenida por finalista que cuenta el juego en seis viñetas (cámara externa y lo que dice el móvil), qué ve cada rol, cómo escala de 2 a 6, el momento para TikTok y la prueba en papel. Comprobadas sin desbordamiento a 390 px y 1100 px.
+- **Archivos:** `docs/02-concepto/finalista-A-la-mudanza.html`, `finalista-B-bichos-alrededor.html`, `finalista-C-idioma-inventado.html` (complementan a los `.md` del mismo nombre, que siguen siendo la ficha de referencia).
+- **Pendiente de decidir:** lo mismo que en la entrada anterior.
 
 ### 2026-10-06 01:45 · Iñaki · Fase C terminada (direcciones visuales) y punto de parada
 
@@ -59,7 +65,7 @@ docs/
   DECISIONES.md             Registro de decisiones (fecha, decisión, descartes, motivo)
   01-investigacion/         Fase A · esencia-y-competencia, juegos-virales,
                             mercado-y-cliente, viabilidad-tecnica, requisitos-publicacion
-  02-concepto/              Fase B · semillas, filtro, finalistas, comparativa
+  02-concepto/              Fase B · semillas, filtro, finalistas (.md + explicador .html), comparativa
   03-visual/                Fase C · README (índice y recomendación) + 4 direcciones:
                             01-carton-y-cinta, 02-neon-de-bar, 03-risografia, 04-plastilina
                             (HTML autocontenido + markdown cada una)

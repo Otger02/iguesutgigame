@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Idioma inventado</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Nunito+Sans:wght@400;700&display=swap">
+<style>
+/* Layout: storyboard de seis viñetas (cámara externa + lo que dice el móvil), luego "qué ve cada uno", escalado 2-6, clip y prueba en papel. */
+:root {
+  --bg: #F8F6F0; --fg: #1F1F2B; --muted: #6B6B7E; --panel: #FFFFFF; --line: #DDDAD0;
+  --send: #2457C5;     /* emisor */
+  --recv: #E8489B;     /* receptor */
+  --sign: #F5D90A;     /* signos, objetivo */
+  --danger: #B8322A;
+  --display: "Bricolage Grotesque", "Trebuchet MS", "Segoe UI", sans-serif;
+  --body: "Nunito Sans", "Segoe UI", system-ui, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #1B1B24; --fg: #F2F0EA; --muted: #ABAABB; --panel: #26262F; --line: #3C3C4A; --send: #5D8BE8; --recv: #F06CB6; --sign: #F7E04A; --danger: #E0564C; color-scheme: dark; }
+}
+:root[data-theme="dark"] { --bg: #1B1B24; --fg: #F2F0EA; --muted: #ABAABB; --panel: #26262F; --line: #3C3C4A; --send: #5D8BE8; --recv: #F06CB6; --sign: #F7E04A; --danger: #E0564C; color-scheme: dark; }
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.5; padding-inline: 16px; padding-block: 24px 64px; }
+.wrap { max-width: 960px; margin: 0 auto; display: grid; gap: 36px; }
+.eyebrow { font-weight: 700; text-transform: uppercase; letter-spacing: .12em; font-size: .75rem; color: var(--muted); }
+h1 { font-family: var(--display); font-weight: 800; font-size: clamp(2.2rem, 7vw, 3.8rem); line-height: 1; margin: 0; text-wrap: balance; }
+h2 { font-family: var(--display); font-weight: 700; font-size: 1.3rem; margin: 0 0 10px; }
+p { max-width: 70ch; margin: 0; }
+header { display: grid; gap: 12px; }
+.pitch { font-family: var(--display); font-weight: 700; font-size: clamp(1.2rem, 3.5vw, 1.6rem); line-height: 1.25; color: var(--send); text-wrap: balance; }
+.fantasy { font-size: 1.05rem; }
+.board { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; display: grid; grid-template-rows: auto auto 1fr; min-width: 0; }
+.panel svg { width: 100%; height: auto; display: block; background: var(--bg); border-bottom: 1px solid var(--line); }
+.panel .step { padding: 10px 12px 0; font-family: var(--display); font-weight: 700; font-size: 1rem; }
+.panel .step small { display: block; color: var(--muted); font-family: var(--body); font-weight: 700; font-size: .72rem; text-transform: uppercase; letter-spacing: .1em; margin-bottom: 2px; }
+.panel .cap { padding: 6px 12px 12px; font-size: .92rem; }
+.panel .cap b { color: var(--send); }
+.panel .cap i { color: var(--recv); font-style: normal; font-weight: 700; }
+.phones { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); justify-items: center; }
+.phone { width: 100%; max-width: 250px; background: var(--fg); border-radius: 28px; padding: 8px; }
+.phone svg { width: 100%; height: auto; display: block; border-radius: 22px; }
+.pcap { font-size: .88rem; color: var(--muted); max-width: 250px; text-align: center; margin-top: 8px; }
+.scale { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+.scale div { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px; min-width: 0; }
+.scale b { font-family: var(--display); font-size: 1.1rem; display: block; }
+.scale span { font-size: .88rem; color: var(--muted); }
+.two { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.box { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; min-width: 0; }
+.box.clip { border-color: var(--send); }
+ol { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+.tag { display: inline-block; background: var(--sign); color: #1F1F2B; font-weight: 700; font-size: .78rem; padding: 2px 8px; border-radius: 999px; }
+footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--line); padding-top: 14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="persona" viewBox="0 0 40 70"><circle cx="20" cy="11" r="9"/><rect x="9" y="22" width="22" height="34" rx="9"/><rect x="12" y="54" width="6" height="14" rx="3"/><rect x="22" y="54" width="6" height="14" rx="3"/></symbol>
+      <symbol id="movil" viewBox="0 0 14 24"><rect x="0" y="0" width="14" height="24" rx="3" fill="#1F1F2B"/><rect x="2" y="3" width="10" height="17" rx="1" fill="#F8F6F0"/></symbol>
+      <!-- signos: nariz, pum, alas, silbido -->
+      <symbol id="s-nariz" viewBox="0 0 40 40"><circle cx="20" cy="20" r="19" fill="#2457C5"/><path d="M20 10 v14 l-6 4 M20 24 l6 4" stroke="#F8F6F0" stroke-width="4" fill="none" stroke-linecap="round"/></symbol>
+      <symbol id="s-pum" viewBox="0 0 40 40"><rect x="1" y="1" width="38" height="38" fill="#E8489B"/><polygon points="20,6 24,16 35,16 26,23 30,34 20,27 10,34 14,23 5,16 16,16" fill="#F8F6F0"/></symbol>
+      <symbol id="s-alas" viewBox="0 0 40 40"><polygon points="20,2 39,38 1,38" fill="#F5D90A" stroke="#1F1F2B" stroke-width="2"/><path d="M12 28 q8 -10 16 0" stroke="#1F1F2B" stroke-width="3" fill="none"/></symbol>
+      <symbol id="s-silbo" viewBox="0 0 40 40"><rect x="1" y="1" width="38" height="38" rx="19" fill="#F8F6F0" stroke="#1F1F2B" stroke-width="2"/><path d="M8 12 l24 24 M8 20 l16 16 M16 8 l20 20" stroke="#1F1F2B" stroke-width="2"/></symbol>
+    </defs>
+  </svg>
+
+  <header>
+    <div class="eyebrow">Finalista C · explicador visual</div>
+    <h1>Idioma inventado</h1>
+    <div class="pitch">Cada ronda un idioma nuevo de gestos y ruidos: entendeos a tiempo.</div>
+    <p class="fantasy">Sois una tribu que cada ronda amanece con un idioma nuevo: cuatro a seis signos, cada uno un gesto o un ruido con un significado. Uno recibe una orden en su pantalla y tiene que transmitirla a otro solo con esos signos. El otro la ejecuta y el móvil comprueba si acertó. Al acabar la ronda, el idioma se olvida y llega otro.</p>
+  </header>
+
+  <section>
+    <h2>Una ronda en seis viñetas</h2>
+    <div class="board">
+
+      <div class="panel">
+        <svg viewBox="0 0 300 180" role="img" aria-label="Todos miran el diccionario de cuatro signos en su móvil durante cinco segundos">
+          <rect width="300" height="180" fill="#F8F6F0"/>
+          <rect x="52" y="18" width="200" height="104" rx="10" fill="#FFFFFF" stroke="#1F1F2B" stroke-width="2"/>
+          <use href="#s-nariz" x="62" y="30" width="26" height="26"/><text x="96" y="48" font-family="Nunito Sans, sans-serif" font-weight="700" font-size="10" fill="#1F1F2B">tocarse la nariz = LEVANTAR</text>
+          <use href="#s-pum" x="62" y="62" width="26" height="26"/><text x="96" y="80" font-family="Nunito Sans, sans-serif" font-weight="700" font-size="10" fill="#1F1F2B">decir "¡pum!" = EL MÓVIL</text>
+          <use href="#s-alas" x="62" y="92" width="26" height="26"/><text x="96" y="110" font-family="Nunito Sans, sans-serif" font-weight="700" font-size="10" fill="#1F1F2B">aletear = DOS VECES</text>
+          <rect x="52" y="126" width="200" height="8" rx="4" fill="#DDDAD0"/><rect x="52" y="126" width="120" height="8" rx="4" fill="#E8489B"/>
+          <use href="#persona" x="20" y="120" width="30" height="52" fill="#2457C5"/>
+          <use href="#persona" x="250" y="120" width="30" height="52" fill="#E8489B"/>
+          <text x="150" y="160" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="700" font-size="13" fill="#1F1F2B">se borra en 5 segundos</text>
+        </svg>
+        <div class="step"><small>1 · 5 segundos</small>El idioma de esta ronda</div>
+        <div class="cap">Todas las pantallas enseñan el mismo diccionario: un icono por signo y su significado. Luego desaparece. Se puede volver a mirar, pero cuesta 2 segundos.</div>
+      </div>
+
+      <div class="panel">
+        <svg viewBox="0 0 300 180" role="img" aria-label="El emisor recibe una orden secreta">
+          <rect width="300" height="180" fill="#F8F6F0"/>
+          <use href="#persona" x="50" y="70" width="40" height="70" fill="#2457C5"/>
+          <path d="M90 96 L118 84" stroke="#2457C5" stroke-width="6" stroke-linecap="round"/>
+          <use href="#movil" x="114" y="70" width="16" height="28"/>
+          <rect x="140" y="40" width="140" height="70" rx="10" fill="#F5D90A" stroke="#1F1F2B" stroke-width="2"/>
+          <text x="210" y="62" text-anchor="middle" font-family="Nunito Sans, sans-serif" font-weight="700" font-size="10" fill="#1F1F2B">DILE A ANA QUE HAGA</text>
+          <text x="210" y="86" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="16" fill="#1F1F2B">LEVANTA EL</text>
+          <text x="210" y="104" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="16" fill="#1F1F2B">MÓVIL DOS VECES</text>
+          <use href="#persona" x="220" y="110" width="40" height="70" fill="#E8489B"/>
+          <text x="240" y="100" text-anchor="middle" font-family="Nunito Sans, sans-serif" font-size="11" fill="#6B6B7E">Ana no lo ve</text>
+        </svg>
+        <div class="step"><small>2 · la orden</small>Solo el emisor la ve</div>
+        <div class="cap">El <b>emisor</b> recibe una acción compuesta por dos o tres significados del idioma. La <i>receptora</i> solo sabe que tiene que hacer algo.</div>
+      </div>
+
+      <div class="panel">
+        <svg viewBox="0 0 300 180" role="img" aria-label="El emisor se toca la nariz, dice pum y aletea; la receptora mira">
+          <rect width="300" height="180" fill="#F8F6F0"/>
+          <use href="#persona" x="60" y="70" width="40" height="70" fill="#2457C5"/>
+          <path d="M70 84 L48 60 M92 84 L114 60" stroke="#2457C5" stroke-width="6" stroke-linecap="round"/>
+          <path d="M80 70 L80 82" stroke="#2457C5" stroke-width="5" stroke-linecap="round"/>
+          <use href="#s-nariz" x="20" y="18" width="30" height="30"/><use href="#s-pum" x="64" y="10" width="30" height="30"/><use href="#s-alas" x="110" y="18" width="30" height="30"/>
+          <rect x="120" y="60" width="60" height="22" rx="11" fill="#2457C5"/><text x="150" y="75" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="700" font-size="12" fill="#F8F6F0">¡PUM!</text>
+          <use href="#persona" x="210" y="70" width="40" height="70" fill="#E8489B"/>
+          <text x="230" y="60" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="20" fill="#E8489B">?</text>
+          <text x="150" y="168" text-anchor="middle" font-family="Nunito Sans, sans-serif" font-size="12" fill="#6B6B7E">nariz + pum + alas = levanta el móvil dos veces</text>
+        </svg>
+        <div class="step"><small>3 · transmitir</small>Solo con signos</div>
+        <div class="cap">El emisor no puede hablar en castellano: se toca la nariz, dice "¡pum!" y aletea. La receptora lo decodifica de memoria o paga 2 segundos por mirar el diccionario.</div>
+      </div>
+
+      <div class="panel">
+        <svg viewBox="0 0 300 180" role="img" aria-label="La receptora levanta el móvil dos veces y el móvil lo valida">
+          <rect width="300" height="180" fill="#F8F6F0"/>
+          <use href="#persona" x="130" y="76" width="40" height="70" fill="#E8489B"/>
+          <path d="M150 82 L150 44" stroke="#E8489B" stroke-width="6" stroke-linecap="round"/>
+          <use href="#movil" x="142" y="18" width="16" height="28"/>
+          <g stroke="#1F1F2B" stroke-width="2" fill="none"><path d="M128 36 l-8 -6 M128 26 l-8 2 M172 36 l8 -6 M172 26 l8 2"/></g>
+          <text x="150" y="70" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="14" fill="#1F1F2B">×2</text>
+          <rect x="70" y="140" width="160" height="26" rx="13" fill="#2457C5"/>
+          <text x="150" y="158" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="700" font-size="12" fill="#F8F6F0">¡ACIERTO! siguiente orden</text>
+        </svg>
+        <div class="step"><small>4 · ejecutar</small>El móvil valida</div>
+        <div class="cap">La receptora levanta el móvil dos veces; el acelerómetro lo detecta. Acierto: nueva orden al instante. En anillo, todos están emitiendo y recibiendo a la vez.</div>
+      </div>
+
+      <div class="panel">
+        <svg viewBox="0 0 300 180" role="img" aria-label="A mitad de ronda un signo cambia de significado">
+          <rect width="300" height="180" fill="#F8F6F0"/>
+          <rect x="40" y="30" width="220" height="30" rx="15" fill="#1F1F2B"/>
+          <text x="150" y="50" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="14" fill="#F5D90A">¡CAMBIO DE IDIOMA!</text>
+          <use href="#s-pum" x="60" y="86" width="36" height="36"/>
+          <text x="110" y="100" font-family="Nunito Sans, sans-serif" font-size="11" fill="#6B6B7E" text-decoration="line-through">= EL MÓVIL</text>
+          <text x="110" y="118" font-family="Nunito Sans, sans-serif" font-weight="700" font-size="11" fill="#1F1F2B">= AL DE LA IZQUIERDA</text>
+          <use href="#persona" x="262" y="86" width="32" height="56" fill="#2457C5"/>
+          <text x="278" y="80" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="16" fill="#2457C5">?!</text>
+          <text x="150" y="166" text-anchor="middle" font-family="Nunito Sans, sans-serif" font-size="12" fill="#6B6B7E">a los 25 segundos, aviso de 2 segundos</text>
+        </svg>
+        <div class="step"><small>5 · a mitad de ronda</small>El idioma evoluciona</div>
+        <div class="cap">Un signo cambia de significado para todos. Quien se lo había aprendido ahora se equivoca con seguridad. Es lo que impide que haya rutina.</div>
+      </div>
+
+      <div class="panel">
+        <svg viewBox="0 0 300 180" role="img" aria-label="Pantalla de fallo: quería decir salta, entendiste perro">
+          <rect width="300" height="180" fill="#F8F6F0"/>
+          <rect x="30" y="20" width="240" height="60" rx="10" fill="#FFFFFF" stroke="#2457C5" stroke-width="3"/>
+          <text x="44" y="42" font-family="Nunito Sans, sans-serif" font-weight="700" font-size="10" fill="#6B6B7E">PAU QUERÍA DECIR</text>
+          <text x="44" y="68" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="22" fill="#2457C5">SALTA</text>
+          <text x="256" y="68" text-anchor="end" font-family="Nunito Sans, sans-serif" font-size="10" fill="#6B6B7E">alas + nariz</text>
+          <rect x="30" y="92" width="240" height="60" rx="10" fill="#FFFFFF" stroke="#E8489B" stroke-width="3"/>
+          <text x="44" y="114" font-family="Nunito Sans, sans-serif" font-weight="700" font-size="10" fill="#6B6B7E">TÚ ENTENDISTE</text>
+          <text x="44" y="140" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="22" fill="#E8489B">PERRO</text>
+          <text x="256" y="140" text-anchor="end" font-family="Nunito Sans, sans-serif" font-size="10" fill="#6B6B7E">ladrido + nariz</text>
+          <text x="150" y="172" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="700" font-size="12" fill="#B8322A">culpable: los dos · siguiente en 2</text>
+        </svg>
+        <div class="step"><small>6 · el clip</small>Quería decir, entendiste</div>
+        <div class="cap">Al fallar, la pantalla enseña lo que se quería decir y lo que se entendió, con los signos. El clip lleva el idioma sobreimpreso para que se entienda el chiste sin conocer el juego.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>Qué ve cada uno</h2>
+    <p>La información repartida es la orden; el canal es el idioma. Pantallas esquemáticas; el estilo visual se decide en la Fase C.</p>
+    <div class="phones" style="margin-top:14px">
+      <div>
+        <div class="phone"><svg viewBox="0 0 250 440" role="img" aria-label="Pantalla del emisor: la orden y el diccionario que se borra">
+          <rect width="250" height="440" fill="#F8F6F0"/>
+          <text x="14" y="36" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="22" fill="#1F1F2B">0:31</text>
+          <rect x="150" y="14" width="86" height="26" rx="13" fill="#2457C5"/><text x="193" y="32" text-anchor="middle" font-family="Nunito Sans, sans-serif" font-weight="700" font-size="11" fill="#F8F6F0">EMISOR</text>
+          <text x="14" y="70" font-family="Nunito Sans, sans-serif" font-weight="700" font-size="10" fill="#6B6B7E">DILE A ANA QUE HAGA</text>
+          <rect x="14" y="78" width="222" height="70" rx="10" fill="#F5D90A" stroke="#1F1F2B" stroke-width="3"/>
+          <text x="26" y="108" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="20" fill="#1F1F2B">LEVANTA EL</text>
+          <text x="26" y="134" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="20" fill="#1F1F2B">MÓVIL ×2</text>
+          <text x="14" y="176" font-family="Nunito Sans, sans-serif" font-weight="700" font-size="10" fill="#6B6B7E">IDIOMA (se borra en 3 s)</text>
+          <g font-family="Nunito Sans, sans-serif" font-weight="700" font-size="11" fill="#1F1F2B">
+            <use href="#s-nariz" x="14" y="186" width="30" height="30"/><text x="52" y="206">nariz = LEVANTAR</text>
+            <use href="#s-pum" x="14" y="224" width="30" height="30"/><text x="52" y="244">"¡pum!" = EL MÓVIL</text>
+            <use href="#s-alas" x="14" y="262" width="30" height="30"/><text x="52" y="282">aletear = DOS VECES</text>
+            <use href="#s-silbo" x="14" y="300" width="30" height="30"/><text x="52" y="320">silbar = AL DE LA IZQ.</text>
+          </g>
+          <rect x="14" y="344" width="222" height="8" rx="4" fill="#DDDAD0"/><rect x="14" y="344" width="130" height="8" rx="4" fill="#E8489B"/>
+          <rect x="14" y="372" width="222" height="44" rx="10" fill="#1F1F2B"/>
+          <text x="125" y="399" text-anchor="middle" font-family="Nunito Sans, sans-serif" font-weight="700" font-size="12" fill="#F8F6F0">VOLVER A VER EL IDIOMA (−2 s)</text>
+        </svg></div>
+        <div class="pcap">Emisor: la orden en grande y el diccionario que se borra. Solo puede usar los signos.</div>
+      </div>
+      <div>
+        <div class="phone"><svg viewBox="0 0 250 440" role="img" aria-label="Pantalla de la receptora: espera signos y tiene botones de acción">
+          <rect width="250" height="440" fill="#F8F6F0"/>
+          <text x="14" y="36" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="22" fill="#1F1F2B">0:31</text>
+          <rect x="140" y="14" width="96" height="26" rx="13" fill="#E8489B"/><text x="188" y="32" text-anchor="middle" font-family="Nunito Sans, sans-serif" font-weight="700" font-size="11" fill="#F8F6F0">RECEPTORA</text>
+          <rect x="14" y="70" width="222" height="90" rx="10" fill="#FFFFFF" stroke="#1F1F2B" stroke-width="2" stroke-dasharray="8 6"/>
+          <text x="125" y="108" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="700" font-size="15" fill="#1F1F2B">Pau te está diciendo algo</text>
+          <text x="125" y="132" text-anchor="middle" font-family="Nunito Sans, sans-serif" font-size="12" fill="#6B6B7E">mírale a él, no a la pantalla</text>
+          <text x="14" y="192" font-family="Nunito Sans, sans-serif" font-weight="700" font-size="10" fill="#6B6B7E">HAZ LO QUE HAYAS ENTENDIDO</text>
+          <rect x="14" y="202" width="106" height="60" rx="10" fill="#FFFFFF" stroke="#1F1F2B" stroke-width="2"/><text x="67" y="238" text-anchor="middle" font-family="Nunito Sans, sans-serif" font-weight="700" font-size="12" fill="#1F1F2B">levantar el móvil</text>
+          <rect x="130" y="202" width="106" height="60" rx="10" fill="#FFFFFF" stroke="#1F1F2B" stroke-width="2"/><text x="183" y="238" text-anchor="middle" font-family="Nunito Sans, sans-serif" font-weight="700" font-size="12" fill="#1F1F2B">darle la vuelta</text>
+          <rect x="14" y="272" width="106" height="60" rx="10" fill="#FFFFFF" stroke="#1F1F2B" stroke-width="2"/><text x="67" y="308" text-anchor="middle" font-family="Nunito Sans, sans-serif" font-weight="700" font-size="12" fill="#1F1F2B">tocar el azul</text>
+          <rect x="130" y="272" width="106" height="60" rx="10" fill="#FFFFFF" stroke="#1F1F2B" stroke-width="2"/><text x="183" y="308" text-anchor="middle" font-family="Nunito Sans, sans-serif" font-weight="700" font-size="12" fill="#1F1F2B">pasar a la izq.</text>
+          <text x="125" y="360" text-anchor="middle" font-family="Nunito Sans, sans-serif" font-size="11" fill="#6B6B7E">las acciones físicas las detecta el móvil</text>
+          <rect x="14" y="380" width="222" height="40" rx="10" fill="#1F1F2B"/>
+          <text x="125" y="405" text-anchor="middle" font-family="Nunito Sans, sans-serif" font-weight="700" font-size="12" fill="#F8F6F0">VER EL IDIOMA (−2 s)</text>
+        </svg></div>
+        <div class="pcap">Receptora: no ve la orden. Ejecuta con el cuerpo (levantar, girar) o con un toque; el móvil comprueba.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>De 2 a 6 jugadores</h2>
+    <div class="scale">
+      <div><b>2</b><span>Pareja que alterna emisor y receptor en cada orden.</span></div>
+      <div><b>3</b><span>Triángulo: A emite para B, B para C, C para A, todos a la vez.</span></div>
+      <div><b>4-6</b><span>Anillo: cada uno emite al de su derecha y recibe del de su izquierda, simultáneamente. Con 6 el ruido cruzado es parte de la gracia.</span></div>
+      <div><b>Nuevo</b><span>Quien llega empieza con un idioma de dos signos y órdenes de un solo significado.</span></div>
+    </div>
+  </section>
+
+  <section class="two">
+    <div class="box clip">
+      <h2>El momento para TikTok</h2>
+      <p>Desde fuera: una mesa entera haciendo ruidos de animales y gestos absurdos con total seriedad, y alguien que hace justo lo contrario de lo que le piden. Lo que guarda el juego: "quería decir SALTA, entendiste PERRO" con los signos sobreimpresos. <span class="tag">cámara externa</span> <span class="tag">clip automático</span></p>
+    </div>
+    <div class="box">
+      <h2>Presencial y a distancia</h2>
+      <p>En presencial, gestos y ruidos; el ruido del bar no importa porque decodifica una persona, no el micro. A distancia, el juego genera idiomas solo de ruidos y palabras inventadas, y la voz va por la app o por la llamada que ya tengáis.</p>
+    </div>
+  </section>
+
+  <section class="box">
+    <h2>Prueba en papel, 15 minutos, esta semana</h2>
+    <ol>
+      <li><b>Material:</b> papel y bolígrafo, 10 tarjetas, tres objetos de colores (vaso rojo, libro azul, cuchara amarilla), un cronómetro.</li>
+      <li><b>Escribid el idioma:</b> cinco signos al azar (tocarse la nariz, aletear, pulgar abajo, "¡pum!", mugir, silbar) con significados al azar (rojo, azul, amarillo, levantar, dar la vuelta, al de la izquierda, dos veces).</li>
+      <li><b>Tarjetas de orden</b> combinando dos significados: "levanta el azul", "da la vuelta al rojo dos veces", "pásale el amarillo al de la izquierda".</li>
+      <li><b>Enseñad el idioma 5 segundos</b> y tapadlo. En anillo, cada emisor transmite su tarjeta solo con signos; el receptor ejecuta con los objetos. 45 segundos por ronda. A los 25, el director grita "¡cambio!" e intercambia dos significados.</li>
+      <li><b>Medir:</b> aciertos, fallos que hacen reír frente a fallos que frustran, cuántas veces se consulta el idioma, y cómo describe el juego alguien que lo ve desde fuera. Si dice "charadas", hay que repensarlo.</li>
+    </ol>
+  </section>
+
+  <footer>Explicador del finalista C · ficha completa en <code>docs/02-concepto/finalista-C-idioma-inventado.md</code> · dirección visual recomendada: Risografía.</footer>
+</div>
+</body>
+</html>
